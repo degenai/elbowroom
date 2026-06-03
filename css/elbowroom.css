@@ -13,7 +13,6 @@
   --navy-900:    #0b1626;
   --gold:        #c49a48;
   --gold-light:  #dcc06a;
-  --gold-soft:   #e7d39a;
   --gold-deep:   #8a6a2e;
   --green:       #3c6a4d;
   --green-light: #4f7e60;
@@ -68,6 +67,8 @@ img { max-width: 100%; height: auto; display: block; }
 a { color: var(--navy); text-decoration: none; transition: color .2s var(--ease); }
 ul { list-style: none; }
 :focus-visible { outline: 3px solid var(--navy); outline-offset: 3px; box-shadow: 0 0 0 6px rgba(246,243,236,.6); border-radius: 4px; }
+/* On dark sections the navy outline would vanish; switch it to gold (the cream halo still reads). */
+.bg-navy :focus-visible, .er-hero :focus-visible, .page-hero :focus-visible, .er-cta :focus-visible, .er-footer :focus-visible { outline-color: var(--gold-light); }
 
 /* ---------- Type ---------- */
 h1, h2, h3, h4 { font-family: var(--f-display); font-weight: 500; line-height: 1.08; color: var(--navy); letter-spacing: -0.01em; }
@@ -85,11 +86,6 @@ p { margin-bottom: 1rem; }
 .eyebrow::before { content: ""; width: 26px; height: 1px; background: var(--gold); display: inline-block; }
 .eyebrow.center::after { content: ""; width: 26px; height: 1px; background: var(--gold); display: inline-block; }
 
-.text-grad {
-  background: linear-gradient(100deg, var(--gold-deep), var(--gold-light) 55%, var(--gold-deep));
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-}
-.script-accent { font-family: var(--f-display); font-style: italic; font-weight: 400; color: var(--green); }
 
 /* ---------- Layout ---------- */
 .container { width: min(92%, var(--container)); margin: 0 auto; position: relative; z-index: 2; }

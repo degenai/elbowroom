@@ -82,23 +82,6 @@ function counters() {
   });
 }
 
-/* ---------- Act 4: magnetic buttons ---------- */
-function magnetic() {
-  if (reduce || window.matchMedia('(pointer: coarse)').matches) return;
-  document.querySelectorAll('[data-magnetic]').forEach((btn) => {
-    const strength = parseFloat(btn.dataset.magnetic) || 0.35;
-    btn.addEventListener('pointermove', (e) => {
-      const r = btn.getBoundingClientRect();
-      const x = (e.clientX - r.left - r.width / 2) * strength;
-      const y = (e.clientY - r.top - r.height / 2) * strength;
-      btn.style.transform = `translate(${x}px, ${y}px)`;
-    });
-    btn.addEventListener('pointerleave', () => {
-      animate(btn, { translateX: 0, translateY: 0, ease: createSpring({ stiffness: 260, damping: 12 }) });
-    });
-  });
-}
-
 /* ---------- Act 5: card tilt ---------- */
 function tilt() {
   if (reduce || window.matchMedia('(pointer: coarse)').matches) return;
