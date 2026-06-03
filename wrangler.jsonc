@@ -1,0 +1,9 @@
+{
+  // Elbow Room Massage Therapy — static site, served via Cloudflare Workers Static Assets.
+  // Assets-only Worker (no script): wrangler deploy uploads ./ and serves it.
+  "name": "elbowroom",
+  "compatibility_date": "2025-06-01",
+  "assets": {
+    "directory": "./"
+  }
+}
