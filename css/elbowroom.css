@@ -223,6 +223,8 @@ section { position: relative; }
   .er-hero .lead { margin-inline: auto; }
   .er-hero .eyebrow, .er-hero .pill { justify-content: center; }
   .btn-row { justify-content: center; }
+  .er-hero .btn-row { flex-direction: column; }
+  .er-hero .btn-row .btn { width: 100%; }
   .er-hero-art { order: -1; margin-bottom: 1rem; }
   .er-medallion { width: min(64%, 280px); }
   .er-trust { justify-content: center; }
