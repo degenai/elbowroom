@@ -185,7 +185,7 @@ function spine() {
 
 function init() {
   // wait for brand fonts so split metrics are final
-  const go = () => { heroSlam(); reveals(); counters(); magnetic(); tilt(); spine(); };
+  const go = () => { heroSlam(); reveals(); counters(); tilt(); spine(); };
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => requestAnimationFrame(go));
   else requestAnimationFrame(go);
 }

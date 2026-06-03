@@ -136,8 +136,8 @@ section { position: relative; }
 .btn-navy:hover { background: var(--navy-mid); box-shadow: var(--shadow-md); }
 .btn-ghost { --bg: transparent; --fg: var(--navy); border-color: var(--line); }
 .btn-ghost:hover { border-color: var(--navy); background: rgba(27,44,77,.04); }
-.bg-navy .btn-ghost { --fg: #eaf0fb; border-color: rgba(255,255,255,.28); }
-.bg-navy .btn-ghost:hover { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.6); }
+.bg-navy .btn-ghost, .er-cta .btn-ghost { --fg: #eaf0fb; border-color: rgba(255,255,255,.28); }
+.bg-navy .btn-ghost:hover, .er-cta .btn-ghost:hover { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.6); }
 .btn-lg { padding: 1.05rem 2.1rem; font-size: 1.05rem; }
 .btn-block { width: 100%; }
 .btn-row { display: flex; flex-wrap: wrap; gap: .9rem; }
