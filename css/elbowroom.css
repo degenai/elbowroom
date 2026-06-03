@@ -98,7 +98,7 @@ p { margin-bottom: 1rem; }
    (the navy bands and the navy heroes) lift to z-index:3 so they fully cover the spine
    instead of letting it thread across them and hurt readability; the spine keeps threading
    down the light cream/paper sections, behind their content. */
-.bg-navy, .er-hero, .page-hero { position: relative; z-index: 3; }
+.bg-navy, .er-hero, .page-hero, .er-footer { position: relative; z-index: 3; }
 .narrow { max-width: var(--container-narrow); margin-inline: auto; }
 section { position: relative; }
 .section { padding: clamp(4rem, 9vw, 8rem) 0; }
@@ -193,7 +193,7 @@ section { position: relative; }
 .er-spine .vert { stroke: var(--gold); stroke-width: 2.2; stroke-linecap: round; opacity: 0; }
 @media (max-width: 1240px) { .er-spine { display: none; } }
 /* mobile top progress */
-.er-progress { position: fixed; top: 0; left: 0; height: 3px; width: 0; background: linear-gradient(90deg, var(--gold-deep), var(--gold-light)); z-index: 1001; }
+.er-progress { position: fixed; top: 0; left: 0; height: 3px; width: 0; background: linear-gradient(90deg, var(--gold-deep), var(--gold-light)); z-index: 1001; pointer-events: none; }
 
 /* ---------- Hero ---------- */
 .er-hero { position: relative; overflow: hidden; background: radial-gradient(120% 130% at 80% -10%, #21365e 0%, var(--navy-deep) 45%, var(--navy-900) 100%); color: #eaf0fb; padding: clamp(7rem, 13vw, 10rem) 0 clamp(4rem, 8vw, 7rem); }
