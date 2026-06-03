@@ -94,10 +94,11 @@ p { margin-bottom: 1rem; }
 /* ---------- Layout ---------- */
 .container { width: min(92%, var(--container)); margin: 0 auto; position: relative; z-index: 2; }
 /* The scroll-spine (.er-spine, z-index:1) paints over section backgrounds but BEHIND
-   content, because every content wrapper above lifts to z-index:2. */
-/* The spine is the home-page scroll motif; on interior pages it competes with the
-   two-column card grids (threading through the gap next to buttons), so hide it there. */
-body:not([data-er-page="home"]) .er-spine { display: none; }
+   content (every content wrapper above lifts to z-index:2). Dark, full-width sections
+   (the navy bands and the navy heroes) lift to z-index:3 so they fully cover the spine
+   instead of letting it thread across them and hurt readability; the spine keeps threading
+   down the light cream/paper sections, behind their content. */
+.bg-navy, .er-hero, .page-hero { position: relative; z-index: 3; }
 .narrow { max-width: var(--container-narrow); margin-inline: auto; }
 section { position: relative; }
 .section { padding: clamp(4rem, 9vw, 8rem) 0; }
