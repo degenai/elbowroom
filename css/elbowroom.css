@@ -124,7 +124,7 @@ section { position: relative; }
   padding: .92rem 1.7rem; border-radius: var(--r-pill); border: 1.5px solid transparent;
   background: var(--bg); color: var(--fg); cursor: pointer; position: relative;
   transition: transform .25s var(--ease), box-shadow .25s var(--ease), background .25s var(--ease), color .2s;
-  will-change: transform; text-align: center;
+  text-align: center;
 }
 .btn:hover { transform: translateY(-2px); color: var(--fg); }
 .btn .arrow { transition: transform .25s var(--ease); }
