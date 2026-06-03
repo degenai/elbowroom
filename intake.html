@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Intake Form | Elbow Room Massage Therapy</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="images/elbowroom/favicon-32.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --navy:#1b2c4d; --gold:#a8842f; --green:#3c6a4d; --ink:#16203a; --muted:#5b6473; --line:#b9bfca;
+    }
+    *{box-sizing:border-box;}
+    html,body{margin:0;}
+    body{font-family:'Inter',system-ui,sans-serif; color:var(--ink); background:#eceae4; line-height:1.4; font-size:13px;}
+    .sheet{background:#fff; max-width:8.5in; margin:18px auto; padding:0.55in 0.6in; box-shadow:0 6px 24px rgba(0,0,0,.12);}
+    h1,h2,h3{font-family:'Fraunces',Georgia,serif; color:var(--navy); margin:0;}
+    .wordmark{font-family:'Cinzel',Georgia,serif; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--navy);}
+    .wordmark b{color:var(--gold);}
+
+    /* Header */
+    .head{display:flex; justify-content:space-between; align-items:flex-start; border-bottom:2px solid var(--navy); padding-bottom:10px; margin-bottom:14px; gap:16px;}
+    .head .brand{display:flex; align-items:center; gap:12px;}
+    .head .brand img{height:52px; width:auto;}
+    .head .title{font-family:'Fraunces',Georgia,serif; font-size:20px; color:var(--navy); font-weight:600;}
+    .head .meta{font-size:11px; color:var(--muted); line-height:1.5; text-align:right;}
+    .head .meta b{color:var(--ink);}
+
+    /* Sections */
+    .sec{margin:0 0 13px; break-inside:avoid; page-break-inside:avoid;}
+    .sec > h2{font-size:13px; text-transform:uppercase; letter-spacing:.08em; color:var(--navy); border-left:3px solid var(--gold); padding-left:8px; margin-bottom:8px;}
+    .row{display:flex; flex-wrap:wrap; gap:10px 18px; margin-bottom:6px;}
+    .f{flex:1 1 180px; min-width:150px;}
+    .f.sm{flex:1 1 90px; min-width:80px;}
+    .f.lg{flex:1 1 100%;}
+    .f label{display:block; font-size:10.5px; color:var(--muted); text-transform:uppercase; letter-spacing:.04em; margin-bottom:2px;}
+    .fill{border-bottom:1px solid var(--line); min-height:20px;}
+    .fill.tall{min-height:34px;}
+
+    /* Checkbox grids */
+    .checks{display:grid; grid-template-columns:repeat(3,1fr); gap:4px 14px; margin:4px 0;}
+    .checks.two{grid-template-columns:repeat(2,1fr);}
+    .chk{display:flex; align-items:center; gap:7px; font-size:12px;}
+    .box{width:13px; height:13px; border:1.4px solid var(--navy); border-radius:3px; flex:0 0 auto;}
+    .inline-yn{display:inline-flex; gap:14px; align-items:center;}
+    .note{font-size:11px; color:var(--muted);}
+    .hint{font-size:10.5px; color:var(--muted); font-style:italic;}
+
+    /* Body map */
+    .bodymap{display:flex; gap:24px; align-items:flex-start; flex-wrap:wrap;}
+    .figwrap{text-align:center;}
+    .figwrap svg{height:200px; width:auto;}
+    .figwrap span{display:block; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-top:2px;}
+    .fig *{fill:none; stroke:var(--navy); stroke-width:2.2; stroke-linejoin:round;}
+    .legend{font-size:11px; color:var(--ink); flex:1 1 200px; min-width:180px;}
+    .legend li{margin-bottom:4px; list-style:none;}
+    .legend ul{padding-left:0; margin:.3rem 0;}
+
+    /* Consent */
+    .consent{font-size:11.5px; color:var(--ink); background:#f6f3ec; border:1px solid var(--line); border-radius:6px; padding:10px 12px;}
+    .sign{display:flex; gap:24px; margin-top:12px; flex-wrap:wrap;}
+    .sign .f{min-width:200px;}
+    .footnote{font-size:10px; color:var(--muted); border-top:1px solid var(--line); margin-top:14px; padding-top:8px;}
+
+    .print-bar{max-width:8.5in; margin:0 auto; text-align:right; padding:6px 0;}
+    .print-bar button{font:600 13px 'Inter',sans-serif; background:var(--navy); color:#fff; border:0; border-radius:999px; padding:9px 18px; cursor:pointer;}
+
+    @media print{
+      body{background:#fff; font-size:11.5px;}
+      .sheet{box-shadow:none; margin:0; max-width:none; padding:0;}
+      .print-bar{display:none;}
+      @page{margin:0.5in;}
+      .figwrap svg{height:175px;}
+    }
+  </style>
+</head>
+<body>
+  <div class="print-bar"><button onclick="window.print()">Print / Save as PDF</button></div>
+  <div class="sheet">
+
+    <div class="head">
+      <div class="brand">
+        <img src="images/elbowroom/logo-600.png" alt="Elbow Room Massage Therapy">
+        <div>
+          <div class="title">Client Intake Form</div>
+          <div class="note">Alex Adamczyk, LMT &middot; GA License #MT013193</div>
+        </div>
+      </div>
+      <div class="meta">
+        Inside <b>Stauffer Chiropractic</b><br>
+        4595 Towne Lake Pkwy, Bldg 300, Ste 100<br>
+        Woodstock, GA 30189<br>
+        Date: ____________________
+      </div>
+    </div>
+
+    <!-- 1. CLIENT INFORMATION -->
+    <div class="sec">
+      <h2>Client Information</h2>
+      <div class="row">
+        <div class="f lg"><label>Full name</label><div class="fill"></div></div>
+      </div>
+      <div class="row">
+        <div class="f"><label>Date of birth</label><div class="fill"></div></div>
+        <div class="f"><label>Phone</label><div class="fill"></div></div>
+        <div class="f"><label>Email</label><div class="fill"></div></div>
+      </div>
+      <div class="row">
+        <div class="f lg"><label>Address</label><div class="fill"></div></div>
+      </div>
+      <div class="row">
+        <div class="f"><label>Occupation</label><div class="fill"></div></div>
+        <div class="f"><label>How did you hear about us?</label><div class="fill"></div></div>
+      </div>
+      <div class="row">
+        <div class="f"><label>Emergency contact (name)</label><div class="fill"></div></div>
+        <div class="f"><label>Emergency contact (phone)</label><div class="fill"></div></div>
+      </div>
+    </div>
+
+    <!-- 2. TODAY'S VISIT + CHIRO -->
+    <div class="sec">
+      <h2>Today's Visit</h2>
+      <div class="row">
+        <div class="f lg"><label>Main reason for today's visit / areas of concern</label><div class="fill tall"></div></div>
+      </div>
+      <div class="row">
+        <div class="f"><label>Currently in pain? Level (0 = none, 10 = worst)</label><div class="fill"></div></div>
+        <div class="f"><label>Currently under chiropractic care?</label>
+          <div class="inline-yn" style="padding-top:3px;"><span class="chk"><span class="box"></span> Yes</span> <span class="chk"><span class="box"></span> No</span> <span class="note">If yes, with whom:</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. HEALTH HISTORY -->
+    <div class="sec">
+      <h2>Health History</h2>
+      <div class="row">
+        <div class="f lg"><label>Current medications</label><div class="fill"></div></div>
+      </div>
+      <div class="row">
+        <div class="f"><label>Allergies (incl. oils, lotions, scents)</label><div class="fill"></div></div>
+        <div class="f"><label>Recent surgeries or injuries (with dates)</label><div class="fill"></div></div>
+      </div>
+      <div class="row">
+        <div class="f"><label>Are you pregnant?</label>
+          <div class="inline-yn" style="padding-top:3px;"><span class="chk"><span class="box"></span> No</span> <span class="chk"><span class="box"></span> Yes &mdash; weeks: ______</span></div>
+        </div>
+        <div class="f"><label>Recent illness or fever?</label><div class="fill"></div></div>
+      </div>
+    </div>
+
+    <!-- 4. CONTRAINDICATIONS -->
+    <div class="sec">
+      <h2>Please check anything you have or have had</h2>
+      <p class="hint">This helps us work safely. Checking a box does not always mean we cannot work, it just tells us where to take care.</p>
+      <div class="checks">
+        <span class="chk"><span class="box"></span> Blood clots / DVT</span>
+        <span class="chk"><span class="box"></span> Heart condition</span>
+        <span class="chk"><span class="box"></span> High blood pressure</span>
+        <span class="chk"><span class="box"></span> Low blood pressure</span>
+        <span class="chk"><span class="box"></span> Stroke</span>
+        <span class="chk"><span class="box"></span> Diabetes</span>
+        <span class="chk"><span class="box"></span> Cancer (current or past)</span>
+        <span class="chk"><span class="box"></span> Osteoporosis</span>
+        <span class="chk"><span class="box"></span> Arthritis</span>
+        <span class="chk"><span class="box"></span> Fibromyalgia</span>
+        <span class="chk"><span class="box"></span> Numbness / tingling</span>
+        <span class="chk"><span class="box"></span> Varicose veins</span>
+        <span class="chk"><span class="box"></span> Recent fracture / injury</span>
+        <span class="chk"><span class="box"></span> Skin condition / rash</span>
+        <span class="chk"><span class="box"></span> Contagious condition</span>
+      </div>
+      <div class="row" style="margin-top:6px;">
+        <div class="f lg"><label>Please explain anything checked above</label><div class="fill"></div></div>
+      </div>
+    </div>
+
+    <!-- 5. FOCUS + BODY MAP -->
+    <div class="sec">
+      <h2>Areas of Focus</h2>
+      <div class="bodymap">
+        <div class="figwrap">
+          <svg viewBox="0 0 100 210" class="fig" aria-hidden="true">
+            <ellipse cx="50" cy="18" rx="11" ry="13"/>
+            <path d="M44 31 L56 31 L56 37 L44 37 Z"/>
+            <path d="M31 41 Q50 35 69 41 L65 112 Q50 118 35 112 Z"/>
+            <rect x="22" y="43" width="9" height="56" rx="4.5"/>
+            <rect x="69" y="43" width="9" height="56" rx="4.5"/>
+            <rect x="37" y="113" width="11" height="82" rx="5"/>
+            <rect x="52" y="113" width="11" height="82" rx="5"/>
+          </svg>
+          <span>Front</span>
+        </div>
+        <div class="figwrap">
+          <svg viewBox="0 0 100 210" class="fig" aria-hidden="true">
+            <ellipse cx="50" cy="18" rx="11" ry="13"/>
+            <path d="M44 31 L56 31 L56 37 L44 37 Z"/>
+            <path d="M31 41 Q50 35 69 41 L65 112 Q50 118 35 112 Z"/>
+            <rect x="22" y="43" width="9" height="56" rx="4.5"/>
+            <rect x="69" y="43" width="9" height="56" rx="4.5"/>
+            <rect x="37" y="113" width="11" height="82" rx="5"/>
+            <rect x="52" y="113" width="11" height="82" rx="5"/>
+          </svg>
+          <span>Back</span>
+        </div>
+        <div class="legend">
+          <p class="hint" style="margin-top:0;">Mark the figures:</p>
+          <ul>
+            <li><b>X</b> = pain &nbsp; <b>O</b> = tension / tightness &nbsp; <b>&#9651;</b> = please avoid</li>
+          </ul>
+          <div style="margin-top:8px;"><label style="font-size:10.5px; color:var(--muted); text-transform:uppercase; letter-spacing:.04em;">Pressure preference</label>
+            <div class="checks two" style="margin-top:4px;">
+              <span class="chk"><span class="box"></span> Light</span>
+              <span class="chk"><span class="box"></span> Medium</span>
+              <span class="chk"><span class="box"></span> Firm</span>
+              <span class="chk"><span class="box"></span> Deep</span>
+            </div>
+          </div>
+          <div style="margin-top:8px;"><label style="font-size:10.5px; color:var(--muted); text-transform:uppercase; letter-spacing:.04em;">Areas to avoid</label><div class="fill"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. MASSAGE HISTORY -->
+    <div class="sec">
+      <h2>Massage History &amp; Preferences</h2>
+      <div class="row">
+        <div class="f"><label>Had massage before?</label>
+          <div class="inline-yn" style="padding-top:3px;"><span class="chk"><span class="box"></span> Yes</span> <span class="chk"><span class="box"></span> No</span></div>
+        </div>
+        <div class="f"><label>Scent / aromatherapy sensitivity?</label><div class="fill"></div></div>
+      </div>
+      <div class="row">
+        <div class="f lg"><label>Anything that helps you relax, or that you would like us to know?</label><div class="fill"></div></div>
+      </div>
+    </div>
+
+    <!-- 7. CONSENT -->
+    <div class="sec">
+      <h2>Informed Consent</h2>
+      <div class="consent">
+        I understand that massage therapy is provided for relaxation, relief of muscular tension, and general well-being. The therapist does not diagnose illness or disease, does not prescribe, and massage is not a substitute for medical care. I have shared all relevant health information and will tell the therapist of any changes. I will stay draped except for the area being worked, and I understand I may adjust pressure, decline any technique, or stop the session at any time. I am voluntarily seeking massage from Elbow Room Massage Therapy and consent to treatment.
+      </div>
+      <div class="sign">
+        <div class="f"><label>Signature</label><div class="fill tall"></div></div>
+        <div class="f sm"><label>Date</label><div class="fill tall"></div></div>
+      </div>
+      <div class="sign" style="margin-top:6px;">
+        <div class="f"><label>Print name</label><div class="fill"></div></div>
+      </div>
+    </div>
+
+    <div class="footnote">
+      Your health information is kept confidential and used only to provide and coordinate your care. &nbsp;&bull;&nbsp; Elbow Room is not accepting clients under 18 at this time. &nbsp;&bull;&nbsp; elbowroommassage.com
+    </div>
+
+  </div>
+</body>
+</html>
