@@ -14,7 +14,7 @@
   --gold:        #c49a48;
   --gold-light:  #dcc06a;
   --gold-soft:   #e7d39a;
-  --gold-deep:   #9f7a34;
+  --gold-deep:   #8a6a2e;
   --green:       #3c6a4d;
   --green-light: #4f7e60;
 
@@ -92,7 +92,9 @@ p { margin-bottom: 1rem; }
 .script-accent { font-family: var(--f-display); font-style: italic; font-weight: 400; color: var(--green); }
 
 /* ---------- Layout ---------- */
-.container { width: min(92%, var(--container)); margin: 0 auto; }
+.container { width: min(92%, var(--container)); margin: 0 auto; position: relative; z-index: 2; }
+/* The scroll-spine (.er-spine, z-index:1) paints over section backgrounds but BEHIND
+   content, because every content wrapper above lifts to z-index:2. */
 .narrow { max-width: var(--container-narrow); margin-inline: auto; }
 section { position: relative; }
 .section { padding: clamp(4rem, 9vw, 8rem) 0; }
