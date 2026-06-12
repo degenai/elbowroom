@@ -2,3 +2,7 @@
 README.md
 wrangler.jsonc
 .assetsignore
+wrangler-email.jsonc
+workers
+.wrangler
+.gitignore

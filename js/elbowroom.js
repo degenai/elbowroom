@@ -5,7 +5,7 @@
  * static, fully-rendered page intact. Nothing here is load-bearing for content.
  *
  * Acts: (1) hero wordmark slam  (2) scroll-reveals  (3) count-up stats
- *       (4) magnetic buttons    (5) card tilt        (6) the gold scroll-spine
+ *       (4) card tilt           (5) the gold scroll-spine
  */
 import { animate, createTimeline, createSpring, stagger, splitText, utils } from './vendor/anime.esm.min.js';
 
@@ -82,7 +82,7 @@ function counters() {
   });
 }
 
-/* ---------- Act 5: card tilt ---------- */
+/* ---------- Act 4: card tilt ---------- */
 function tilt() {
   if (reduce || window.matchMedia('(pointer: coarse)').matches) return;
   document.querySelectorAll('[data-tilt]').forEach((card) => {
@@ -99,7 +99,7 @@ function tilt() {
   });
 }
 
-/* ---------- Act 6: the gold scroll-spine ---------- */
+/* ---------- Act 5: the gold scroll-spine ---------- */
 function spine() {
   const host = document.querySelector('.er-spine');
   const bar = document.querySelector('.er-progress');

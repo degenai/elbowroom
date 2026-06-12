@@ -2,7 +2,7 @@
 
 Static site for elbowroommassage.com. HTML/CSS/JS, no build step.
 
-Pages: index, services, about, locations, book, community, brand-kit.
+Pages: index, services, about, locations, book, community, brand-kit, intake (printable client form, linked from book).
 Shared: css/elbowroom.css, js/elbowroom*.js, elbowroom/ partials, images/elbowroom/ assets.
 
 Booking: Jane (shared platform with the chiro). The book page links out to Jane; replace the

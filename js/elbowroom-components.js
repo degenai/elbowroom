@@ -1,7 +1,7 @@
 /*
  * ELBOW ROOM — universal header/footer loader.
  * Classic script. Injects the shared partials, wires nav behaviour, then loads the
- * anime.js interaction module (so magnetic/tilt see the header buttons too).
+ * anime.js interaction module.
  * Paths are derived from this script's own URL, so the whole elbowroom* set can be
  * moved to a fresh domain root without editing include paths.
  */
