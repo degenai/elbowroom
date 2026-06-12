@@ -1,0 +1,7 @@
+# Wrangler local state — carries the Cloudflare account id + cache; never commit.
+.wrangler/
+node_modules/
+.dev.vars
+*.log
+.DS_Store
+Thumbs.db

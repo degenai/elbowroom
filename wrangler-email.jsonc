@@ -1,0 +1,9 @@
+{
+  // Elbow Room inbound email forwarder (see workers/email-forwarder.js).
+  // Deploy:  npx wrangler deploy --config wrangler-email.jsonc
+  // Secret:  npx wrangler secret put FORWARD_TO --config wrangler-email.jsonc
+  //          (comma-separated verified destination addresses)
+  "name": "elbowroom-mail",
+  "main": "./workers/email-forwarder.js",
+  "compatibility_date": "2025-06-01"
+}
