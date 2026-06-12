@@ -81,7 +81,7 @@ p { margin-bottom: 1rem; }
 .eyebrow {
   display: inline-flex; align-items: center; gap: .55rem;
   font-family: var(--f-body); font-weight: 600; font-size: .8rem;
-  letter-spacing: .18em; text-transform: uppercase; color: #8a6a2e;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--gold-deep);
 }
 .eyebrow::before { content: ""; width: 26px; height: 1px; background: var(--gold); display: inline-block; }
 .eyebrow.center::after { content: ""; width: 26px; height: 1px; background: var(--gold); display: inline-block; }
@@ -104,7 +104,6 @@ section { position: relative; }
 
 .bg-cream { background: var(--cream); }
 .bg-paper { background: var(--paper); }
-.bg-sand  { background: var(--sand); }
 .bg-navy  { background: var(--navy-deep); color: #e8edf6; }
 .bg-navy h1, .bg-navy h2, .bg-navy h3 { color: #fff; }
 .bg-navy .lead, .bg-navy p { color: #b9c4d8; }
@@ -265,9 +264,6 @@ section { position: relative; }
 .card p { color: var(--ink-soft); margin-bottom: 0; font-size: .98rem; }
 .card .tag { position: absolute; top: 1.1rem; right: 1.1rem; font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--green); }
 
-/* tilt wrapper */
-.tilt { transform-style: preserve-3d; transition: transform .3s var(--ease); }
-
 /* service card with price */
 .svc { display: flex; flex-direction: column; }
 .svc .price { font-family: var(--f-display); font-size: 2rem; color: var(--navy); font-weight: 600; margin: .3rem 0 .2rem; }
@@ -350,7 +346,6 @@ section { position: relative; }
 @media (max-width: 460px) { .er-foot-grid { grid-template-columns: 1fr; } }
 .er-foot-brand img { height: 46px; width: auto; margin-bottom: 1rem; }
 .er-foot-brand p { font-size: .92rem; max-width: 34ch; }
-.er-foot-col h4 { color: #fff; }
 .er-foot-col h4 { font-family: var(--f-body); font-weight: 700; font-size: .82rem; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 1rem; color: #fff; }
 .er-foot-col a { display: block; padding: .3rem 0; font-size: .95rem; }
 .er-foot-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; padding-top: 1.6rem; font-size: .85rem; color: #8090ac; }
