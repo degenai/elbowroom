@@ -32,7 +32,16 @@
       });
     }
     if (header) {
-      var onScroll = function () { header.classList.toggle('scrolled', window.scrollY > 12); };
+      var ticking = false;
+      var onScroll = function () {
+        if (!ticking) {
+          window.requestAnimationFrame(function () {
+            header.classList.toggle('scrolled', window.scrollY > 12);
+            ticking = false;
+          });
+          ticking = true;
+        }
+      };
       window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
     }
     // active link from <body data-er-page="...">

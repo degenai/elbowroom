@@ -1,0 +1,3 @@
+## 2026-06-15 - Eliminate scroll layout thrashing
+**Learning:** In `js/elbowroom.js`, mixing layout reads (`document.documentElement.scrollHeight` and `window.innerHeight`) with DOM style updates (`draw.style.strokeDashoffset`) within un-cached scroll frames caused significant layout thrashing. Because `scrollHeight` forces a synchronous reflow when styles have been invalidated, executing this up to 120 times a second on scroll is highly inefficient.
+**Action:** Decouple layout reads from scroll updates. Use a `ResizeObserver` (or `resize` event fallback) to cache dimension properties like `scrollHeight` and `innerHeight`, and only reference those cached values within the `requestAnimationFrame` scroll loop that applies style updates.
