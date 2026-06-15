@@ -1,0 +1,48 @@
+name: gate
+
+# Parse/sanity gate for bot PRs (Jules / Bolt / Palette / Sentinel) and human pushes.
+# Its only job: refuse to go green if something doesn't parse or a test fails.
+# It is deliberately NOT a style linter — empty stylelint rules, structural-only HTML.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  parse-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # 1) Every JS file must parse. Zero deps, instant. Catches broken JS edits.
+      - name: JS parses (node --check)
+        run: |
+          files=$(git ls-files '*.js' '*.mjs' '*.cjs' | grep -vE '\.min\.js$|/vendor/|_deprecated/' || true)
+          if [ -z "$files" ]; then echo "no js"; exit 0; fi
+          for f in $files; do
+            node --check "$f" || { echo "::error file=$f::JS syntax error"; exit 1; }
+          done
+
+      # 2) Existing unit tests must pass (only runs if any exist; skips _deprecated/).
+      - name: Unit tests (node --test)
+        run: |
+          files=$(git ls-files '*.test.js' '*.test.mjs' | grep -vE '_deprecated/' || true)
+          if [ -n "$files" ]; then node --test $files; else echo "no tests"; fi
+
+      # 3) Every CSS file must PARSE. Stops the orphan-brace class of bug
+      #    (the malformed CSS that broke the People's Elbow body font in PR #76).
+      - name: CSS parses (stylelint)
+        run: |
+          files=$(git ls-files '*.css' | grep -vE '\.min\.css$|/vendor/|_deprecated/' || true)
+          if [ -z "$files" ]; then echo "no css"; exit 0; fi
+          npx --yes stylelint $files
+
+      # 4) HTML must be structurally sound: closed tags, no duplicate ids/attrs.
+      - name: HTML structure (html-validate)
+        run: |
+          files=$(git ls-files '*.html' | grep -vE '/vendor/|_deprecated/' || true)
+          if [ -z "$files" ]; then echo "no html"; exit 0; fi
+          npx --yes html-validate $files
