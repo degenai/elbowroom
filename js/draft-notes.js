@@ -131,12 +131,24 @@ function formatWhen(value) {
 function renderNote(note) {
   const item = document.createElement('article');
   item.className = 'draft-note';
+  if (note.digested_at) item.dataset.digested = 'true';
 
   const meta = document.createElement('div');
   meta.className = 'draft-note-meta';
 
   const reviewer = document.createElement('strong');
   reviewer.textContent = note.reviewer || 'Reviewer';
+
+  const metaRight = document.createElement('span');
+  metaRight.className = 'draft-note-meta-right';
+
+  if (note.digested_at) {
+    const badge = document.createElement('span');
+    badge.className = 'draft-note-digested';
+    badge.textContent = '✓ Digested';
+    badge.title = `Digested ${formatWhen(note.digested_at)}`;
+    metaRight.append(badge);
+  }
 
   const when = document.createElement('time');
   when.dateTime = note.created_at || '';
@@ -145,7 +157,8 @@ function renderNote(note) {
   const text = document.createElement('p');
   text.textContent = note.note || '';
 
-  meta.append(reviewer, when);
+  metaRight.append(when);
+  meta.append(reviewer, metaRight);
   item.append(meta, text);
   return item;
 }
@@ -156,9 +169,10 @@ function setStatus(panel, message, tone = '') {
   status.dataset.tone = tone;
 }
 
-function updateCount(panel, count) {
+function updateCount(panel, count, digestedCount = 0) {
   const countNode = panel.querySelector('.draft-notes-count');
-  countNode.textContent = count === 1 ? '1 note' : `${count} notes`;
+  const countText = count === 1 ? '1 note' : `${count} notes`;
+  countNode.textContent = digestedCount ? `${countText} · ${digestedCount} digested` : countText;
 }
 
 async function loadNotes(panel, postId) {
@@ -177,7 +191,8 @@ async function loadNotes(panel, postId) {
     } else {
       notes.forEach((note) => list.append(renderNote(note)));
     }
-    updateCount(panel, notes.length);
+    const digestedCount = notes.filter((note) => note.digested_at).length;
+    updateCount(panel, notes.length, digestedCount);
     setStatus(panel, notes.length ? 'Loaded.' : 'Ready for the first note.', 'ok');
     panel.dataset.loaded = 'true';
   } catch (error) {
@@ -221,7 +236,7 @@ function notesPanelHtml(postId) {
         </label>
         <div class="draft-note-actions">
           <button type="submit">Save note</button>
-          <small>Saved notes are raw review input only — they do not publish or edit the post.</small>
+          <small>Saved notes are raw review input only. They do not publish or edit the post.</small>
         </div>
       </form>
     </div>

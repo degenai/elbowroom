@@ -10,6 +10,7 @@ class FakeD1 {
       reviewer: row.reviewer,
       note: row.note,
       created_at: row.created_at ?? `2026-06-18T12:00:0${index}.000Z`,
+      digested_at: row.digested_at ?? null,
     }));
     this.nextId = this.rows.reduce((max, row) => Math.max(max, row.id), 0) + 1;
   }
@@ -22,23 +23,44 @@ class FakeD1 {
           async all() {
             if (!sql.includes('FROM draft_notes')) throw new Error(`Unexpected all SQL: ${sql}`);
             const [postId] = args;
+            const project = (row) => {
+              if (sql.includes('digested_at')) return { ...row };
+              const { digested_at: _digestedAt, ...withoutDigest } = row;
+              return withoutDigest;
+            };
             return {
               results: db.rows
                 .filter((row) => row.post_id === postId)
-                .sort((a, b) => b.created_at.localeCompare(a.created_at)),
+                .sort((a, b) => b.created_at.localeCompare(a.created_at))
+                .map(project),
             };
           },
           async first() {
             if (!sql.includes('FROM draft_notes')) throw new Error(`Unexpected first SQL: ${sql}`);
             const [id] = args;
-            return db.rows.find((row) => row.id === id) ?? null;
+            const row = db.rows.find((candidate) => candidate.id === Number(id)) ?? null;
+            if (!row) return null;
+            if (sql.includes('digested_at')) return { ...row };
+            const { digested_at: _digestedAt, ...withoutDigest } = row;
+            return withoutDigest;
           },
           async run() {
-            if (!sql.includes('INSERT INTO draft_notes')) throw new Error(`Unexpected run SQL: ${sql}`);
-            const [postId, reviewer, note, createdAt] = args;
-            const row = { id: db.nextId++, post_id: postId, reviewer, note, created_at: createdAt };
-            db.rows.push(row);
-            return { meta: { last_row_id: row.id } };
+            if (sql.includes('INSERT INTO draft_notes')) {
+              const [postId, reviewer, note, createdAt] = args;
+              const row = { id: db.nextId++, post_id: postId, reviewer, note, created_at: createdAt, digested_at: null };
+              db.rows.push(row);
+              return { meta: { last_row_id: row.id, changes: 1 } };
+            }
+
+            if (sql.includes('UPDATE draft_notes')) {
+              const [digestedAt, id] = args;
+              const row = db.rows.find((candidate) => candidate.id === Number(id));
+              if (!row) return { meta: { changes: 0 } };
+              row.digested_at = digestedAt;
+              return { meta: { changes: 1 } };
+            }
+
+            throw new Error(`Unexpected run SQL: ${sql}`);
           },
         };
       },
@@ -82,8 +104,8 @@ test('GET returns notes for one post newest-first without leaking other posts', 
   assert.deepEqual(await json(response), {
     post_id: 'er-001',
     notes: [
-      { id: 3, post_id: 'er-001', reviewer: 'Anna', note: 'Newest note', created_at: '2026-06-18T12:02:00.000Z' },
-      { id: 1, post_id: 'er-001', reviewer: 'Alex', note: 'Older note', created_at: '2026-06-18T12:00:00.000Z' },
+      { id: 3, post_id: 'er-001', reviewer: 'Anna', note: 'Newest note', created_at: '2026-06-18T12:02:00.000Z', digested_at: null },
+      { id: 1, post_id: 'er-001', reviewer: 'Alex', note: 'Older note', created_at: '2026-06-18T12:00:00.000Z', digested_at: null },
     ],
   });
 });
@@ -104,8 +126,31 @@ test('POST stores a raw reviewer note and returns the created note', async () =>
   assert.equal(body.note.post_id, 'er-003');
   assert.equal(body.note.reviewer, 'Sarah');
   assert.equal(body.note.note, 'This hook is strong, but I want a softer CTA.\nMaybe ask people to DM first.');
+  assert.equal(body.note.digested_at, null);
   assert.match(body.note.created_at, /^\d{4}-\d{2}-\d{2}T/);
   assert.equal(db.rows.length, 1);
+});
+
+test('PATCH marks an existing note as digested and returns the updated note', async () => {
+  const db = new FakeD1([
+    { id: 7, post_id: 'er-008', reviewer: 'Alex', note: 'Talk with me about trigger points.', created_at: '2026-06-19T13:28:42.897Z' },
+  ]);
+
+  const response = await handleDraftNotesRequest(
+    authedRequest('https://example.com/api/draft-notes', {
+      method: 'PATCH',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ id: 7, digested: true }),
+    }),
+    envWithDb(db)
+  );
+
+  assert.equal(response.status, 200);
+  const body = await json(response);
+  assert.equal(body.note.id, 7);
+  assert.equal(body.note.post_id, 'er-008');
+  assert.match(body.note.digested_at, /^\d{4}-\d{2}-\d{2}T/);
+  assert.equal(db.rows[0].digested_at, body.note.digested_at);
 });
 
 test('validates post id, reviewer, and note text before writing', async () => {
@@ -161,5 +206,5 @@ test('OPTIONS returns CORS preflight headers', async () => {
   );
 
   assert.equal(response.status, 204);
-  assert.equal(response.headers.get('access-control-allow-methods'), 'GET, POST, OPTIONS');
+  assert.equal(response.headers.get('access-control-allow-methods'), 'GET, POST, PATCH, OPTIONS');
 });

@@ -532,7 +532,10 @@ section { position: relative; }
 .draft-notes-list { display: grid; gap: .65rem; margin-bottom: .9rem; }
 .draft-notes-empty { margin: 0; color: var(--muted); font-size: .9rem; font-style: italic; }
 .draft-note { background: var(--sand); border: 1px solid var(--line); border-radius: var(--r-md); padding: .8rem .9rem; }
+.draft-note[data-digested="true"] { border-color: rgba(45,118,87,.32); background: rgba(45,118,87,.08); }
 .draft-note-meta { display: flex; justify-content: space-between; gap: .75rem; color: var(--muted); font-size: .78rem; margin-bottom: .45rem; }
+.draft-note-meta-right { display: inline-flex; align-items: center; gap: .45rem; flex-wrap: wrap; justify-content: flex-end; }
+.draft-note-digested { display: inline-flex; align-items: center; border: 1px solid rgba(45,118,87,.28); border-radius: var(--r-pill); background: rgba(45,118,87,.12); color: var(--green); font-weight: 900; padding: .12rem .45rem; }
 .draft-note-meta strong { color: var(--navy); }
 .draft-note p { margin: 0; color: var(--ink-soft); white-space: pre-wrap; }
 .draft-note-form { display: grid; gap: .75rem; }

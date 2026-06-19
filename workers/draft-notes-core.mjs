@@ -7,7 +7,7 @@ function corsHeaders(request) {
   const origin = request.headers.get('origin') || '*';
   return {
     'access-control-allow-origin': origin,
-    'access-control-allow-methods': 'GET, POST, OPTIONS',
+    'access-control-allow-methods': 'GET, POST, PATCH, OPTIONS',
     'access-control-allow-headers': 'authorization, content-type, x-draft-review-key',
     'access-control-max-age': '86400',
     vary: 'Origin',
@@ -72,7 +72,7 @@ function notesDb(env) {
 async function listNotes(db, postId) {
   const result = await db
     .prepare(
-      `SELECT id, post_id, reviewer, note, created_at
+      `SELECT id, post_id, reviewer, note, created_at, digested_at
        FROM draft_notes
        WHERE post_id = ?
        ORDER BY created_at DESC, id DESC`
@@ -94,12 +94,49 @@ async function createNote(db, payload) {
 
   const id = result.meta?.last_row_id;
   if (!id) {
-    return { id: null, ...payload, created_at: createdAt };
+    return { id: null, ...payload, created_at: createdAt, digested_at: null };
   }
 
   return db
     .prepare(
-      `SELECT id, post_id, reviewer, note, created_at
+      `SELECT id, post_id, reviewer, note, created_at, digested_at
+       FROM draft_notes
+       WHERE id = ?`
+    )
+    .bind(id)
+    .first();
+}
+
+function normalizeDigestPayload(payload) {
+  return {
+    id: Number(payload?.id),
+    digested: payload?.digested === true,
+  };
+}
+
+function validateDigestPayload(payload) {
+  const errors = [];
+  if (!Number.isInteger(payload.id) || payload.id < 1) errors.push('id must be a positive note id');
+  if (!payload.digested) errors.push('digested must be true');
+  return errors;
+}
+
+async function markNoteDigested(db, id) {
+  const digestedAt = new Date().toISOString();
+  const result = await db
+    .prepare(
+      `UPDATE draft_notes
+       SET digested_at = ?
+       WHERE id = ?`
+    )
+    .bind(digestedAt, id)
+    .run();
+
+  if ((result.meta?.changes ?? 0) < 1) return null;
+
+  return db
+    .prepare(
+      `SELECT id, post_id, reviewer, note, created_at, digested_at
        FROM draft_notes
        WHERE id = ?`
     )
@@ -144,6 +181,19 @@ export async function handleDraftNotesRequest(request, env = {}) {
 
     const note = await createNote(db, payload);
     return jsonResponse(request, { note }, 201);
+  }
+
+  if (request.method === 'PATCH') {
+    const rawPayload = await parseJsonBody(request);
+    if (!rawPayload) return jsonResponse(request, { errors: ['body must be valid JSON'] }, 400);
+
+    const payload = normalizeDigestPayload(rawPayload);
+    const errors = validateDigestPayload(payload);
+    if (errors.length) return jsonResponse(request, { errors }, 400);
+
+    const note = await markNoteDigested(db, payload.id);
+    if (!note) return jsonResponse(request, { error: 'note not found' }, 404);
+    return jsonResponse(request, { note });
   }
 
   return jsonResponse(request, { error: 'method not allowed' }, 405);

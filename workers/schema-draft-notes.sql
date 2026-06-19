@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS draft_notes (
   post_id TEXT NOT NULL CHECK(length(post_id) <= 16),
   reviewer TEXT NOT NULL CHECK(length(reviewer) BETWEEN 1 AND 80),
   note TEXT NOT NULL CHECK(length(note) BETWEEN 1 AND 4000),
-  created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))
+  created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
+  digested_at TEXT DEFAULT NULL
 );
 
 CREATE INDEX IF NOT EXISTS idx_draft_notes_post_created
