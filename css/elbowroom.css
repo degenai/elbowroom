@@ -415,6 +415,31 @@ section { position: relative; }
   margin-top: 1.2rem; background: var(--sand); border: 1px solid var(--line); border-radius: var(--r-lg);
   padding: 1.1rem 1.25rem; color: var(--ink-soft); font-size: .94rem;
 }
+.draft-review-key-field {
+  display: grid;
+  gap: .38rem;
+  margin-bottom: .8rem;
+}
+.draft-review-key-field span {
+  display: block;
+  font-weight: 700;
+  font-size: .82rem;
+  color: var(--navy);
+}
+#draft-review-key {
+  width: min(100%, 360px);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  font-size: .92rem;
+  padding: .65rem .8rem;
+}
+#draft-review-key:focus {
+  outline: 2px solid rgba(196,154,72,.32);
+  border-color: var(--gold);
+}
 .draft-review-key p { margin: .25rem 0; }
 .draft-gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
 .draft-card {

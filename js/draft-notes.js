@@ -1,6 +1,7 @@
 const API_ENDPOINT = document.body.dataset.notesApi || '/api/draft-notes';
 const REVIEWER_STORAGE_KEY = 'elbowroomDraftReviewer';
 const REVIEW_KEY_STORAGE_KEY = 'elbowroomDraftReviewKey';
+const REVIEW_KEY_INPUT_ID = 'draft-review-key';
 
 const reviewKeyState = { value: '' };
 
@@ -12,22 +13,50 @@ function readStoredReviewKey() {
   }
 }
 
+function reviewKeyInput() {
+  return document.getElementById(REVIEW_KEY_INPUT_ID);
+}
+
 function getReviewKey() {
   if (reviewKeyState.value) return reviewKeyState.value;
+
+  const input = reviewKeyInput();
+  if (input) {
+    const fromInput = input.value?.trim() || '';
+    if (fromInput) {
+      reviewKeyState.value = fromInput;
+      return reviewKeyState.value;
+    }
+  }
+
   reviewKeyState.value = readStoredReviewKey();
-  return reviewKeyState.value;
+  const keyFromStorage = reviewKeyState.value;
+  if (input && keyFromStorage) input.value = keyFromStorage;
+  return keyFromStorage;
 }
 
 function setReviewKey(value) {
   const normalized = String(value || '').trim();
   reviewKeyState.value = normalized;
+
   try {
     if (normalized) {
       sessionStorage.setItem(REVIEW_KEY_STORAGE_KEY, normalized);
     }
   } catch {
-    // Storage can be disabled; fallback to in-memory copy still works.
+    // Storage can be disabled; fallback to in-memory + top-level input still works.
   }
+
+  const input = reviewKeyInput();
+  if (input && input.value.trim() !== normalized) {
+    input.value = normalized;
+  }
+}
+
+function clearNotesLoadState() {
+  document.querySelectorAll('.draft-notes-panel').forEach((panel) => {
+    panel.dataset.loaded = 'false';
+  });
 }
 
 function getReviewer() {
@@ -46,9 +75,28 @@ function setReviewer(value) {
   }
 }
 
+function currentReviewKeyFromUi() {
+  const input = reviewKeyInput();
+  const fromInput = input?.value?.trim() || '';
+  if (fromInput) {
+    setReviewKey(fromInput);
+    return fromInput;
+  }
+
+  return getReviewKey();
+}
+
 function authHeaders(reviewKey) {
-  const key = String(reviewKey || getReviewKey() || '').trim();
+  const key = String(reviewKey || currentReviewKeyFromUi() || '').trim();
   return key ? { authorization: `Bearer ${key}` } : {};
+}
+
+function requireReviewKey(panel) {
+  const input = reviewKeyInput();
+  setStatus(panel, 'Review key required. Paste the shared key at the top of this page, then reopen Reviewer notes.', 'warn');
+  if (input) {
+    input.focus();
+  }
 }
 
 async function apiFetch(url, options = {}) {
@@ -113,15 +161,13 @@ function updateCount(panel, count) {
   countNode.textContent = count === 1 ? '1 note' : `${count} notes`;
 }
 
-async function loadNotes(panel, postId, reviewKey = '') {
+async function loadNotes(panel, postId) {
   const list = panel.querySelector('.draft-notes-list');
   list.textContent = '';
   setStatus(panel, 'Loading notes…');
 
   try {
-    const body = await apiFetch(`${API_ENDPOINT}?post_id=${encodeURIComponent(postId)}`, {
-      headers: authHeaders(reviewKey),
-    });
+    const body = await apiFetch(`${API_ENDPOINT}?post_id=${encodeURIComponent(postId)}`);
     const notes = body.notes || [];
     if (notes.length === 0) {
       const empty = document.createElement('p');
@@ -140,8 +186,7 @@ async function loadNotes(panel, postId, reviewKey = '') {
       return;
     }
     if (error.status === 401) {
-      setStatus(panel, 'Review key required. Paste the shared key, then reopen or submit again.', 'warn');
-      panel.querySelector('.draft-review-key-input').focus();
+      requireReviewKey(panel);
       return;
     }
     setStatus(panel, `Could not load notes: ${error.message}`, 'warn');
@@ -166,16 +211,10 @@ function notesPanelHtml(postId) {
       <div class="draft-notes-status" aria-live="polite">Open to load notes for ${postId}.</div>
       <div class="draft-notes-list"></div>
       <form class="draft-note-form">
-        <div class="draft-note-fields">
-          <label>
-            <span>Name</span>
-            <input name="reviewer" autocomplete="name" maxlength="80" required placeholder="Alex, Morgan, Anna, Sarah…">
-          </label>
-          <label>
-            <span>Review key <em>(if needed)</em></span>
-            <input class="draft-review-key-input" name="review_key" type="password" autocomplete="off" placeholder="Shared review key">
-          </label>
-        </div>
+        <label>
+          <span>Name</span>
+          <input name="reviewer" autocomplete="name" maxlength="80" required placeholder="Alex, Morgan, Anna, Sarah…">
+        </label>
         <label class="draft-note-textarea">
           <span>Raw note block</span>
           <textarea name="note" maxlength="4000" required placeholder="Drop the thought here: approve, tighten hook, change CTA, this feels too clinical, etc."></textarea>
@@ -199,13 +238,11 @@ function attachNotesPanel(card) {
 
   const form = panel.querySelector('.draft-note-form');
   const reviewerInput = form.elements.reviewer;
-  const keyInput = form.elements.review_key;
   reviewerInput.value = getReviewer();
-  keyInput.value = getReviewKey();
 
   panel.addEventListener('toggle', () => {
     if (panel.open && panel.dataset.loaded !== 'true') {
-      loadNotes(panel, postId, keyInput.value.trim());
+      loadNotes(panel, postId);
     }
   });
 
@@ -213,7 +250,12 @@ function attachNotesPanel(card) {
     event.preventDefault();
     const reviewer = reviewerInput.value.trim();
     const note = form.elements.note.value.trim();
-    const reviewKey = keyInput.value.trim();
+    const reviewKey = currentReviewKeyFromUi();
+
+    if (!reviewKey) {
+      requireReviewKey(panel);
+      return;
+    }
 
     if (!reviewer || !note) {
       setStatus(panel, 'Name and note are required.', 'warn');
@@ -221,7 +263,6 @@ function attachNotesPanel(card) {
     }
 
     setReviewer(reviewer);
-    setReviewKey(reviewKey);
     setStatus(panel, 'Saving note…');
 
     try {
@@ -243,8 +284,7 @@ function attachNotesPanel(card) {
         return;
       }
       if (error.status === 401) {
-        setStatus(panel, 'Review key required. Paste the shared key and try again.', 'warn');
-        keyInput.focus();
+        requireReviewKey(panel);
         return;
       }
       setStatus(panel, `Could not save note: ${error.message}`, 'warn');
@@ -254,4 +294,30 @@ function attachNotesPanel(card) {
   card.append(panel);
 }
 
+function initReviewKeyInput() {
+  const input = reviewKeyInput();
+  if (!input) {
+    return;
+  }
+
+  const existing = getReviewKey();
+  if (existing) {
+    input.value = existing;
+  }
+
+  input.addEventListener('input', () => {
+    const next = input.value.trim();
+    reviewKeyState.value = next;
+    clearNotesLoadState();
+    try {
+      if (next) {
+        sessionStorage.setItem(REVIEW_KEY_STORAGE_KEY, next);
+      }
+    } catch {
+      // best effort
+    }
+  });
+}
+
+initReviewKeyInput();
 document.querySelectorAll('.draft-card[id]').forEach(attachNotesPanel);
