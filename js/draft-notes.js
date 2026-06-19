@@ -2,7 +2,9 @@ const API_ENDPOINT = document.body.dataset.notesApi || '/api/draft-notes';
 const REVIEWER_STORAGE_KEY = 'elbowroomDraftReviewer';
 const REVIEW_KEY_STORAGE_KEY = 'elbowroomDraftReviewKey';
 
-function getReviewKey() {
+const reviewKeyState = { value: '' };
+
+function readStoredReviewKey() {
   try {
     return sessionStorage.getItem(REVIEW_KEY_STORAGE_KEY) || '';
   } catch {
@@ -10,11 +12,21 @@ function getReviewKey() {
   }
 }
 
+function getReviewKey() {
+  if (reviewKeyState.value) return reviewKeyState.value;
+  reviewKeyState.value = readStoredReviewKey();
+  return reviewKeyState.value;
+}
+
 function setReviewKey(value) {
+  const normalized = String(value || '').trim();
+  reviewKeyState.value = normalized;
   try {
-    if (value) sessionStorage.setItem(REVIEW_KEY_STORAGE_KEY, value);
+    if (normalized) {
+      sessionStorage.setItem(REVIEW_KEY_STORAGE_KEY, normalized);
+    }
   } catch {
-    // Storage can be disabled; the form still works for the current submit.
+    // Storage can be disabled; fallback to in-memory copy still works.
   }
 }
 
@@ -34,8 +46,8 @@ function setReviewer(value) {
   }
 }
 
-function authHeaders() {
-  const key = getReviewKey();
+function authHeaders(reviewKey) {
+  const key = String(reviewKey || getReviewKey() || '').trim();
   return key ? { authorization: `Bearer ${key}` } : {};
 }
 
@@ -101,13 +113,15 @@ function updateCount(panel, count) {
   countNode.textContent = count === 1 ? '1 note' : `${count} notes`;
 }
 
-async function loadNotes(panel, postId) {
+async function loadNotes(panel, postId, reviewKey = '') {
   const list = panel.querySelector('.draft-notes-list');
   list.textContent = '';
   setStatus(panel, 'Loading notes…');
 
   try {
-    const body = await apiFetch(`${API_ENDPOINT}?post_id=${encodeURIComponent(postId)}`);
+    const body = await apiFetch(`${API_ENDPOINT}?post_id=${encodeURIComponent(postId)}`, {
+      headers: authHeaders(reviewKey),
+    });
     const notes = body.notes || [];
     if (notes.length === 0) {
       const empty = document.createElement('p');
@@ -190,7 +204,9 @@ function attachNotesPanel(card) {
   keyInput.value = getReviewKey();
 
   panel.addEventListener('toggle', () => {
-    if (panel.open && panel.dataset.loaded !== 'true') loadNotes(panel, postId);
+    if (panel.open && panel.dataset.loaded !== 'true') {
+      loadNotes(panel, postId, keyInput.value.trim());
+    }
   });
 
   form.addEventListener('submit', async (event) => {
@@ -211,7 +227,10 @@ function attachNotesPanel(card) {
     try {
       const body = await apiFetch(API_ENDPOINT, {
         method: 'POST',
-        headers: { 'content-type': 'application/json' },
+        headers: {
+          ...authHeaders(reviewKey),
+          'content-type': 'application/json',
+        },
         body: JSON.stringify({ post_id: postId, reviewer, note }),
       });
       prependCreatedNote(panel, body.note);
