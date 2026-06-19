@@ -12,13 +12,17 @@
     {
       "pattern": "elbowroommassage.com/api/draft-notes*",
       "zone_name": "elbowroommassage.com"
+    },
+    {
+      "pattern": "www.elbowroommassage.com/api/draft-notes*",
+      "zone_name": "elbowroommassage.com"
     }
   ],
   "d1_databases": [
     {
       "binding": "DRAFT_NOTES_DB",
       "database_name": "elbowroom-draft-notes",
-      "database_id": "REPLACE_WITH_D1_DATABASE_ID"
+      "database_id": "edef99f3-3ba0-4df1-9dcf-96fe5640fb05"
     }
   ]
 }

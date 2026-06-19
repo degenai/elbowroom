@@ -46,21 +46,35 @@ class FakeD1 {
   }
 }
 
+const REVIEW_SECRET = 'review-room';
+
 async function json(response) {
   return response.json();
 }
 
+function envWithDb(db) {
+  return { DRAFT_NOTES_DB: db, DRAFT_REVIEW_SECRET: REVIEW_SECRET };
+}
+
+function authedRequest(url, options = {}) {
+  return new Request(url, {
+    ...options,
+    headers: {
+      authorization: `Bearer ${REVIEW_SECRET}`,
+      ...(options.headers || {}),
+    },
+  });
+}
+
 test('GET returns notes for one post newest-first without leaking other posts', async () => {
-  const env = {
-    DRAFT_NOTES_DB: new FakeD1([
-      { id: 1, post_id: 'er-001', reviewer: 'Alex', note: 'Older note', created_at: '2026-06-18T12:00:00.000Z' },
-      { id: 2, post_id: 'er-002', reviewer: 'Morgan', note: 'Wrong post', created_at: '2026-06-18T12:01:00.000Z' },
-      { id: 3, post_id: 'er-001', reviewer: 'Anna', note: 'Newest note', created_at: '2026-06-18T12:02:00.000Z' },
-    ]),
-  };
+  const env = envWithDb(new FakeD1([
+    { id: 1, post_id: 'er-001', reviewer: 'Alex', note: 'Older note', created_at: '2026-06-18T12:00:00.000Z' },
+    { id: 2, post_id: 'er-002', reviewer: 'Morgan', note: 'Wrong post', created_at: '2026-06-18T12:01:00.000Z' },
+    { id: 3, post_id: 'er-001', reviewer: 'Anna', note: 'Newest note', created_at: '2026-06-18T12:02:00.000Z' },
+  ]));
 
   const response = await handleDraftNotesRequest(
-    new Request('https://example.com/api/draft-notes?post_id=er-001'),
+    authedRequest('https://example.com/api/draft-notes?post_id=er-001'),
     env
   );
 
@@ -77,12 +91,12 @@ test('GET returns notes for one post newest-first without leaking other posts', 
 test('POST stores a raw reviewer note and returns the created note', async () => {
   const db = new FakeD1();
   const response = await handleDraftNotesRequest(
-    new Request('https://example.com/api/draft-notes', {
+    authedRequest('https://example.com/api/draft-notes', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ post_id: 'er-003', reviewer: 'Sarah', note: 'This hook is strong, but I want a softer CTA.\nMaybe ask people to DM first.' }),
     }),
-    { DRAFT_NOTES_DB: db }
+    envWithDb(db)
   );
 
   assert.equal(response.status, 201);
@@ -97,12 +111,12 @@ test('POST stores a raw reviewer note and returns the created note', async () =>
 test('validates post id, reviewer, and note text before writing', async () => {
   const db = new FakeD1();
   const response = await handleDraftNotesRequest(
-    new Request('https://example.com/api/draft-notes', {
+    authedRequest('https://example.com/api/draft-notes', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ post_id: '../secret', reviewer: '', note: '' }),
     }),
-    { DRAFT_NOTES_DB: db }
+    envWithDb(db)
   );
 
   assert.equal(response.status, 400);
@@ -115,7 +129,7 @@ test('validates post id, reviewer, and note text before writing', async () => {
 });
 
 test('requires a bearer review key when DRAFT_REVIEW_SECRET is configured', async () => {
-  const env = { DRAFT_NOTES_DB: new FakeD1(), DRAFT_REVIEW_SECRET: 'review-room' };
+  const env = envWithDb(new FakeD1());
 
   const denied = await handleDraftNotesRequest(
     new Request('https://example.com/api/draft-notes?post_id=er-001'),
@@ -124,12 +138,20 @@ test('requires a bearer review key when DRAFT_REVIEW_SECRET is configured', asyn
   assert.equal(denied.status, 401);
 
   const allowed = await handleDraftNotesRequest(
-    new Request('https://example.com/api/draft-notes?post_id=er-001', {
-      headers: { authorization: 'Bearer review-room' },
-    }),
+    authedRequest('https://example.com/api/draft-notes?post_id=er-001'),
     env
   );
   assert.equal(allowed.status, 200);
+});
+
+test('fails closed when DRAFT_REVIEW_SECRET is missing', async () => {
+  const response = await handleDraftNotesRequest(
+    new Request('https://example.com/api/draft-notes?post_id=er-001'),
+    { DRAFT_NOTES_DB: new FakeD1() }
+  );
+
+  assert.equal(response.status, 500);
+  assert.deepEqual(await json(response), { error: 'DRAFT_REVIEW_SECRET binding is not configured' });
 });
 
 test('OPTIONS returns CORS preflight headers', async () => {

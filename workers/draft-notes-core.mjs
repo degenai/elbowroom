@@ -25,10 +25,11 @@ function emptyResponse(request, status = 204) {
   return new Response(null, { status, headers: corsHeaders(request) });
 }
 
-function authorize(request, env) {
-  const secret = env?.DRAFT_REVIEW_SECRET;
-  if (!secret) return true;
+function reviewSecret(env) {
+  return String(env?.DRAFT_REVIEW_SECRET || '').trim();
+}
 
+function authorize(request, secret) {
   const bearer = request.headers.get('authorization') || '';
   const headerKey = request.headers.get('x-draft-review-key') || '';
   return bearer === `Bearer ${secret}` || headerKey === secret;
@@ -109,7 +110,12 @@ async function createNote(db, payload) {
 export async function handleDraftNotesRequest(request, env = {}) {
   if (request.method === 'OPTIONS') return emptyResponse(request);
 
-  if (!authorize(request, env)) {
+  const secret = reviewSecret(env);
+  if (!secret) {
+    return jsonResponse(request, { error: 'DRAFT_REVIEW_SECRET binding is not configured' }, 500);
+  }
+
+  if (!authorize(request, secret)) {
     return jsonResponse(request, { error: 'review key required' }, 401);
   }
 
