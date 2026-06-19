@@ -1,0 +1,24 @@
+{
+  // Elbow Room Draft Review note API.
+  // Deploy after creating the D1 DB and replacing database_id:
+  //   npx wrangler d1 create elbowroom-draft-notes
+  //   npx wrangler d1 execute elbowroom-draft-notes --remote --file=workers/schema-draft-notes.sql --config wrangler-draft-notes.jsonc
+  //   npx wrangler secret put DRAFT_REVIEW_SECRET --config wrangler-draft-notes.jsonc
+  //   npx wrangler deploy --config wrangler-draft-notes.jsonc
+  "name": "elbowroom-draft-notes",
+  "main": "./workers/draft-notes.mjs",
+  "compatibility_date": "2025-06-01",
+  "routes": [
+    {
+      "pattern": "elbowroommassage.com/api/draft-notes*",
+      "zone_name": "elbowroommassage.com"
+    }
+  ],
+  "d1_databases": [
+    {
+      "binding": "DRAFT_NOTES_DB",
+      "database_name": "elbowroom-draft-notes",
+      "database_id": "REPLACE_WITH_D1_DATABASE_ID"
+    }
+  ]
+}

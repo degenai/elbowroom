@@ -3,6 +3,10 @@ README.md
 wrangler.jsonc
 .assetsignore
 wrangler-email.jsonc
+wrangler-draft-notes.jsonc
 workers
 .wrangler
 .gitignore
+.github
+.htmlvalidate.json
+.stylelintrc.json
