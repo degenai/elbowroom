@@ -10,3 +10,4 @@ workers
 .github
 .htmlvalidate.json
 .stylelintrc.json
+scripts
