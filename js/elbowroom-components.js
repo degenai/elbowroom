@@ -48,7 +48,10 @@
     var page = document.body.getAttribute('data-er-page');
     if (page) {
       var active = document.querySelector('.er-navlinks a[data-er="' + page + '"]');
-      if (active) active.classList.add('active');
+      if (active) {
+        active.classList.add('active');
+        active.setAttribute('aria-current', 'page');
+      }
     }
     // dynamic year
     document.querySelectorAll('[data-er-year]').forEach(function (el) { el.textContent = new Date().getFullYear(); });
