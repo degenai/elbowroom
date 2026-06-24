@@ -105,6 +105,28 @@ function spine() {
   const bar = document.querySelector('.er-progress');
   const NS = 'http://www.w3.org/2000/svg';
 
+  if (!host && !bar) return;
+
+  let draw, verts, len;
+  let cachedMax = 0;
+  let ticking = false;
+
+  const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+
+  // Cache document dimensions to avoid layout thrashing during scroll
+  const updateCachedMax = () => {
+    cachedMax = document.documentElement.scrollHeight - window.innerHeight;
+    onScroll(); // ensure visual update if resized without scrolling
+  };
+  updateCachedMax();
+
+  // Update cached dimensions on resize
+  if ('ResizeObserver' in window) {
+    new ResizeObserver(updateCachedMax).observe(document.documentElement);
+  } else {
+    window.addEventListener('resize', updateCachedMax, { passive: true });
+  }
+
   if (host && !reduce) {
     const svgEl = document.createElementNS(NS, 'svg');
     svgEl.setAttribute('viewBox', '0 0 60 1000');
@@ -122,11 +144,11 @@ function spine() {
 
     const d = 'M30 0 C 18 140, 42 250, 30 380 C 18 510, 42 620, 30 760 C 22 860, 34 940, 30 1000';
     const base = document.createElementNS(NS, 'path'); base.setAttribute('class', 'spine-base'); base.setAttribute('d', d);
-    const draw = document.createElementNS(NS, 'path'); draw.setAttribute('class', 'spine-draw'); draw.setAttribute('d', d);
+    draw = document.createElementNS(NS, 'path'); draw.setAttribute('class', 'spine-draw'); draw.setAttribute('d', d);
     svgEl.appendChild(base); svgEl.appendChild(draw);
 
     // vertebra cross-ticks down the line
-    const verts = [];
+    verts = [];
     for (let i = 1; i <= 11; i++) {
       const y = (1000 / 12) * i;
       const t = document.createElementNS(NS, 'line');
@@ -136,34 +158,26 @@ function spine() {
     }
     host.appendChild(svgEl);
 
-    const len = draw.getTotalLength();
+    len = draw.getTotalLength();
     draw.style.strokeDasharray = len;
     draw.style.strokeDashoffset = len;
+  }
 
-    let ticking = false;
-    const update = () => {
-      ticking = false;
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      const p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+  const update = () => {
+    ticking = false;
+    const p = cachedMax > 0 ? Math.min(1, Math.max(0, window.scrollY / cachedMax)) : 0;
+
+    if (draw) {
       draw.style.strokeDashoffset = len * (1 - p);
       verts.forEach((v) => { v.el.style.opacity = p >= v.at ? '1' : '0'; });
-    };
-    const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
-    update();
-  }
+    }
+    if (bar) {
+      bar.style.width = (p * 100) + '%';
+    }
+  };
 
-  if (bar) {
-    let ticking = false;
-    const update = () => {
-      ticking = false;
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      bar.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
-    };
-    window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
-    update();
-  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  update();
 }
 
 function init() {
