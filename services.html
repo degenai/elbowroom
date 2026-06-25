@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Services &amp; Pricing | Elbow Room Massage Therapy</title>
   <meta name="description" content="Therapeutic massage in Woodstock, GA: 15, 30, or 60-minute sessions, chair or table, plus on-site chair massage for teams and events. A full 60 minutes, not 50, honest pricing, shaped around you.">
-  <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#1b2c4d">
   <link rel="canonical" href="https://elbowroommassage.com/services.html">
   <meta property="og:url" content="https://elbowroommassage.com/services.html">
@@ -18,6 +17,43 @@
   <meta name="twitter:title" content="Services &amp; Pricing | Elbow Room Massage Therapy">
   <meta name="twitter:description" content="Therapeutic massage in Woodstock, GA: 15, 30, or 60-minute sessions, chair or table, plus on-site chair massage for teams and events. A full 60 minutes, not 50, honest pricing, shaped around you.">
   <meta name="twitter:image" content="https://elbowroommassage.com/images/elbowroom/og.jpg">
+
+  <!-- Service + pricing structured data (JSON-LD). Provider links to the business node on the homepage by @id. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Service",
+        "name": "15-minute massage",
+        "serviceType": "Therapeutic massage (chair or table)",
+        "description": "A quick, targeted reset for the neck, shoulders, or low back. Seated and clothed, or on the table.",
+        "provider": { "@type": "LocalBusiness", "@id": "https://elbowroommassage.com/#business", "name": "Elbow Room Massage Therapy" },
+        "areaServed": { "@type": "City", "name": "Woodstock, GA" },
+        "offers": { "@type": "Offer", "price": "25", "priceCurrency": "USD" }
+      },
+      {
+        "@type": "Service",
+        "name": "30-minute massage",
+        "serviceType": "Therapeutic massage (chair or table)",
+        "description": "Focused work on a problem area, or a fuller reset than the 15. Chair or table.",
+        "provider": { "@type": "LocalBusiness", "@id": "https://elbowroommassage.com/#business", "name": "Elbow Room Massage Therapy" },
+        "areaServed": { "@type": "City", "name": "Woodstock, GA" },
+        "offers": { "@type": "Offer", "price": "45", "priceCurrency": "USD" }
+      },
+      {
+        "@type": "Service",
+        "name": "60-minute massage",
+        "serviceType": "Deep tissue, trigger point, and myofascial massage (chair or table)",
+        "description": "The full hour, hands-on the whole time: deep tissue, trigger point, and myofascial work for stubborn knots, old injuries, arthritis, and everyday aches.",
+        "provider": { "@type": "LocalBusiness", "@id": "https://elbowroommassage.com/#business", "name": "Elbow Room Massage Therapy" },
+        "areaServed": { "@type": "City", "name": "Woodstock, GA" },
+        "offers": { "@type": "Offer", "price": "85", "priceCurrency": "USD" }
+      }
+    ]
+  }
+  </script>
+
   <link rel="icon" href="images/elbowroom/favicon-32.png" type="image/png">
   <link rel="apple-touch-icon" href="images/elbowroom/favicon-180.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">

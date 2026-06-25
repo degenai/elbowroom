@@ -2,3 +2,5 @@ User-agent: *
 Disallow: /draft-review
 Disallow: /draft-review.html
 Allow: /
+
+Sitemap: https://elbowroommassage.com/sitemap.xml
