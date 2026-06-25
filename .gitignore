@@ -5,3 +5,7 @@ node_modules/
 *.log
 .DS_Store
 Thumbs.db
+
+# Bot agent scratchpad memory: keep out of the repo (fixes .Jules/.jules case-collision)
+.jules/
+.Jules/
