@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Elbow Room — The Event Hour (print targets)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Unlisted print target: kept out of search and off the site nav. Not linked from any page,
+     no sitemap entry. Sibling of cards.html on the /promo print shelf. Renders TWO artifacts to
+     PDF via headless Edge (--print-to-pdf): a US Letter table sign and a 4-up counter-card sheet.
+     The event attribution code is driven by ?code= (default ENDLESS40; FLEX40 later) so the same
+     pages serve future events. Render targets: ?print=sign, ?print=cards, ?print=card. -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#112038">
+<link rel="icon" href="../images/elbowroom/favicon-32.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1b2c4d; --navy-mid:#1f3357; --navy-deep:#112038; --navy-900:#0b1626;
+    --gold:#c49a48; --gold-light:#dcc06a; --gold-deep:#8a6a2e;
+    --green:#3c6a4d; --cream:#f6f3ec; --paper:#fbf9f4; --sand:#efe9dd;
+    --ink:#16203a; --muted:#5b6473; --muted-2:#9aa1ad; --line:rgba(27,44,77,.14);
+    --cream-soft:rgba(246,243,236,.72); --cream-faint:rgba(246,243,236,.42);
+    --f-wordmark:'Cinzel',Georgia,serif; --f-display:'Fraunces',Georgia,serif;
+    --f-body:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+
+  /* ============================ SHARED PRIMITIVES ============================ */
+  .arc{position:absolute;border-radius:50%;border:1.5pt solid rgba(196,154,72,.16);pointer-events:none;}
+  .strike{position:relative;color:var(--muted-2);}
+  .strike::after{content:"";position:absolute;left:-4%;right:-4%;top:52%;height:.09em;background:var(--gold-light);transform:rotate(-8deg);}
+  /* QR sits on its own cream tile so the quiet zone always scans, even on navy. */
+  .qr-tile{background:var(--cream);border-radius:7pt;display:flex;align-items:center;justify-content:center;}
+  .qr-tile img{display:block;}
+
+  /* ============================ THE TABLE SIGN (US Letter portrait) ============================ */
+  .sign{
+    width:8.5in; height:11in; position:relative; overflow:hidden;
+    background:var(--navy-deep); color:var(--cream); font-family:var(--f-body);
+    display:flex; flex-direction:column; align-items:center;
+    padding:0.62in 0.6in 0.44in; text-align:center;
+  }
+  .sign .arc-1{width:6.4in;height:6.4in;top:-2.7in;right:-2.5in;}
+  .sign .arc-2{width:9in;height:9in;top:-3.9in;right:-3.8in;border-color:rgba(196,154,72,.10);}
+  .sign>*{position:relative;z-index:1;}
+
+  .sign-eyebrow{font-weight:700;font-size:14pt;letter-spacing:.36em;text-indent:.36em;color:var(--gold-light);text-transform:uppercase;}
+  .sign-head{font-family:var(--f-display);font-weight:600;font-size:58pt;line-height:.98;color:var(--gold);letter-spacing:.01em;margin-top:11pt;}
+
+  .sign-hero{margin-top:14pt;display:flex;flex-direction:column;align-items:center;}
+  .sign-hero .prices{display:flex;align-items:baseline;gap:22pt;line-height:1;}
+  .sign-hero .now{font-family:var(--f-display);font-weight:600;font-size:150pt;color:var(--cream);line-height:.82;}
+  .sign-hero .was{font-family:var(--f-display);font-weight:500;font-size:52pt;}
+  .sign-hero .sub{margin-top:12pt;font-weight:500;font-size:17.5pt;color:var(--cream);letter-spacing:.01em;}
+  .sign-hero .sub b{color:var(--gold-light);font-weight:600;}
+
+  .sign-guard{
+    margin-top:16pt;display:inline-flex;align-items:center;gap:10pt;
+    border:1.4pt solid rgba(196,154,72,.6);border-radius:999px;padding:8pt 20pt;
+    font-weight:600;font-size:14.5pt;letter-spacing:.03em;color:var(--cream);
+  }
+  .sign-guard .sep{color:var(--gold);}
+
+  /* ---- the staircase: the anchoring cure, price positions literally climb ---- */
+  .ladder-wrap{margin-top:auto;padding-top:20pt;width:100%;}
+  .ladder-lbl{font-weight:700;font-size:12.5pt;letter-spacing:.3em;text-indent:.3em;color:var(--gold-light);text-transform:uppercase;}
+  .ladder{display:flex;align-items:flex-end;justify-content:center;gap:12pt;margin-top:14pt;}
+  .step{display:flex;flex-direction:column;align-items:center;}
+  .step .bar{
+    width:1.62in;border-radius:9pt 9pt 0 0;display:flex;align-items:flex-start;justify-content:center;
+    padding-top:12pt;color:var(--cream);
+  }
+  .step .bar .p{font-family:var(--f-display);font-weight:600;font-size:41pt;line-height:1;}
+  .step.s1 .bar{height:0.92in;background:var(--gold);}
+  .step.s1 .bar .p{color:var(--navy-deep);}
+  .step.s2 .bar{height:1.34in;background:rgba(246,243,236,.10);border:1.4pt solid rgba(196,154,72,.55);border-bottom:none;}
+  .step.s2 .bar .p{color:var(--gold-light);}
+  .step.s3 .bar{height:1.78in;background:rgba(246,243,236,.05);border:1.2pt solid rgba(154,161,173,.5);border-bottom:none;}
+  .step.s3 .bar .p{color:var(--cream-soft);}
+  .step .cap{margin-top:9pt;line-height:1.2;}
+  .step .cap .t{font-weight:700;font-size:11pt;letter-spacing:.14em;text-transform:uppercase;}
+  .step .cap .d{font-size:10pt;color:var(--cream-soft);margin-top:2pt;}
+  .step.s1 .cap .t{color:var(--gold-light);}
+  .step.s2 .cap .t{color:var(--cream);}
+  .step.s3 .cap .t{color:var(--muted-2);}
+  .ladder .arrow{align-self:center;margin-bottom:0.5in;color:var(--gold);font-size:22pt;font-weight:400;line-height:1;}
+  .ladder-note{margin-top:14pt;font-size:12.5pt;line-height:1.4;color:var(--cream);max-width:6.1in;margin-left:auto;margin-right:auto;}
+  .ladder-note b{color:var(--gold-light);font-weight:600;}
+
+  /* ---- footer band: brand lockup + code + QR ---- */
+  .sign-foot{
+    margin-top:auto;padding-top:20pt;width:100%;
+    display:flex;align-items:center;justify-content:space-between;gap:0.3in;
+    border-top:1pt solid rgba(196,154,72,.28);
+  }
+  .sign-foot .brand{display:flex;align-items:center;gap:11pt;text-align:left;}
+  .sign-foot .brand img{height:0.62in;width:auto;}
+  .sign-foot .brand .wm{font-family:var(--f-wordmark);font-weight:700;font-size:19pt;letter-spacing:.14em;text-indent:.14em;color:var(--gold);line-height:1;}
+  .sign-foot .brand .sb{font-weight:600;font-size:7.5pt;letter-spacing:.34em;text-indent:.34em;text-transform:uppercase;color:var(--cream-soft);margin-top:4pt;}
+  .sign-foot .code{text-align:center;}
+  .sign-foot .code .k{font-weight:700;font-size:8.5pt;letter-spacing:.26em;text-indent:.26em;text-transform:uppercase;color:var(--cream-faint);}
+  .sign-foot .code .v{margin-top:5pt;font-family:var(--f-wordmark);font-weight:700;font-size:19pt;letter-spacing:.12em;text-indent:.12em;color:var(--gold-light);border:1.2pt solid rgba(196,154,72,.5);border-radius:7pt;padding:5pt 13pt;}
+  .sign-foot .book{display:flex;align-items:center;gap:10pt;text-align:right;}
+  .sign-foot .book .ml{font-weight:600;font-size:9pt;letter-spacing:.14em;text-transform:uppercase;color:var(--cream-soft);line-height:1.35;max-width:1.1in;}
+  .sign-foot .qr-tile{padding:6pt;}
+  .sign-foot .qr-tile img{width:0.86in;height:0.86in;}
+
+  .sign-fine{margin-top:13pt;font-size:8pt;line-height:1.5;color:var(--cream-faint);max-width:7in;letter-spacing:.01em;}
+  .sign-fine b{color:var(--cream-soft);font-weight:600;}
+
+  /* ============================ COUNTER CARD (quarter of US Letter) ============================ */
+  .card{
+    width:4.25in;height:5.5in;position:relative;overflow:hidden;
+    background:var(--navy-deep);color:var(--cream);font-family:var(--f-body);
+    display:flex;flex-direction:column;align-items:center;text-align:center;
+    padding:0.32in 0.3in 0.26in;
+  }
+  .card .arc-1{width:3.2in;height:3.2in;top:-1.5in;right:-1.4in;}
+  .card>*{position:relative;z-index:1;}
+  .c-top{display:flex;align-items:center;gap:7pt;}
+  .c-top img{height:0.3in;width:auto;}
+  .c-top .wm{font-family:var(--f-wordmark);font-weight:700;font-size:11pt;letter-spacing:.16em;text-indent:.16em;color:var(--gold);line-height:1;}
+  .c-eyebrow{margin-top:11pt;font-weight:700;font-size:9.5pt;letter-spacing:.28em;text-indent:.28em;text-transform:uppercase;color:var(--gold-light);}
+  .c-hero{margin-top:3pt;display:flex;align-items:baseline;gap:11pt;line-height:1;}
+  .c-hero .now{font-family:var(--f-display);font-weight:600;font-size:62pt;color:var(--cream);line-height:.82;}
+  .c-hero .was{font-family:var(--f-display);font-weight:500;font-size:24pt;}
+  .c-sub{margin-top:7pt;font-weight:500;font-size:10.5pt;color:var(--cream);}
+  .c-sub b{color:var(--gold-light);font-weight:600;}
+  .c-guard{margin-top:8pt;font-weight:600;font-size:8.5pt;letter-spacing:.05em;color:var(--cream-soft);}
+  .c-guard .sep{color:var(--gold);}
+
+  .c-ladder{margin-top:11pt;display:flex;align-items:flex-end;justify-content:center;gap:6pt;}
+  .c-step{display:flex;flex-direction:column;align-items:center;}
+  .c-step .bar{width:0.82in;border-radius:5pt 5pt 0 0;display:flex;align-items:flex-start;justify-content:center;padding-top:5pt;}
+  .c-step .bar .p{font-family:var(--f-display);font-weight:600;font-size:19pt;line-height:1;}
+  .c-step.s1 .bar{height:0.44in;background:var(--gold);}
+  .c-step.s1 .bar .p{color:var(--navy-deep);}
+  .c-step.s2 .bar{height:0.64in;background:rgba(246,243,236,.1);border:1pt solid rgba(196,154,72,.55);border-bottom:none;}
+  .c-step.s2 .bar .p{color:var(--gold-light);}
+  .c-step.s3 .bar{height:0.86in;background:rgba(246,243,236,.05);border:1pt solid rgba(154,161,173,.5);border-bottom:none;}
+  .c-step.s3 .bar .p{color:var(--cream-soft);}
+  .c-step .l{margin-top:5pt;font-weight:700;font-size:6.5pt;letter-spacing:.1em;text-transform:uppercase;}
+  .c-step.s1 .l{color:var(--gold-light);}
+  .c-step.s2 .l{color:var(--cream);}
+  .c-step.s3 .l{color:var(--muted-2);}
+  .c-ladder .arrow{align-self:center;margin-bottom:0.22in;color:var(--gold);font-size:11pt;line-height:1;}
+  .c-note{margin-top:8pt;font-size:8pt;line-height:1.35;color:var(--cream);max-width:3.3in;}
+  .c-note b{color:var(--gold-light);font-weight:600;}
+
+  .c-foot{margin-top:auto;padding-top:11pt;width:100%;display:flex;align-items:center;justify-content:space-between;gap:9pt;border-top:1pt solid rgba(196,154,72,.28);}
+  .c-foot .code{text-align:left;}
+  .c-foot .code .k{font-weight:700;font-size:6pt;letter-spacing:.2em;text-transform:uppercase;color:var(--cream-faint);}
+  .c-foot .code .v{margin-top:2pt;font-family:var(--f-wordmark);font-weight:700;font-size:13pt;letter-spacing:.1em;text-indent:.1em;color:var(--gold-light);}
+  .c-foot .code .bk{margin-top:4pt;font-size:7.5pt;color:var(--cream-soft);}
+  .c-foot .book{display:flex;align-items:center;gap:7pt;text-align:right;}
+  .c-foot .book .ml{font-weight:600;font-size:7pt;letter-spacing:.12em;text-transform:uppercase;color:var(--cream-soft);line-height:1.3;max-width:0.7in;}
+  .c-foot .qr-tile{padding:4pt;}
+  .c-foot .qr-tile img{width:0.56in;height:0.56in;}
+  .c-fine{margin-top:9pt;font-size:5.6pt;line-height:1.45;color:var(--cream-faint);max-width:3.7in;}
+  .c-fine b{color:var(--cream-soft);font-weight:600;}
+
+  /* ============================ 4-UP SHEET (US Letter, cut on the cross) ============================ */
+  .sheet{width:8.5in;height:11in;background:var(--navy-deep);position:relative;}
+  .card-grid{display:grid;grid-template-columns:4.25in 4.25in;grid-template-rows:5.5in 5.5in;}
+  .sheet .card{outline:0.3pt dashed rgba(220,192,106,.4);outline-offset:-0.15pt;}
+
+  /* ============================ SCREEN REVIEW CHROME ============================ */
+  @media screen{
+    body{background:#e7e3da;font-family:var(--f-body);color:var(--ink);padding:26px 18px 60px;}
+    .guide{max-width:820px;margin:0 auto 26px;background:#fff;border:1px solid #d9d3c6;border-radius:14px;padding:20px 24px;box-shadow:0 10px 30px rgba(17,32,56,.08);}
+    .guide h1{font-family:var(--f-display);font-weight:600;font-size:22px;color:var(--navy);margin-bottom:6px;}
+    .guide p{font-size:13.5px;line-height:1.55;color:#41485a;margin-bottom:8px;}
+    .guide code{background:#f1ede4;border-radius:5px;padding:1px 6px;font-size:12.5px;color:var(--navy-deep);}
+    .guide .k{color:var(--gold-deep);font-weight:600;}
+    .stage{display:flex;flex-wrap:wrap;gap:34px;align-items:flex-start;justify-content:center;}
+    .stage>figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:10px;}
+    figcaption{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#6b7280;font-weight:600;}
+    .sign,.card,.sheet{box-shadow:0 14px 40px rgba(17,32,56,.28);}
+    .sign-holder{width:calc(8.5in * .62);height:calc(11in * .62);overflow:hidden;}
+    .sign{transform:scale(.62);transform-origin:top left;}
+    .sheet-holder{width:calc(8.5in * .58);height:calc(11in * .58);overflow:hidden;}
+    .sheet{transform:scale(.58);transform-origin:top left;}
+    /* screenshot isolation: ?print=sign|cards|card renders only that target at native size */
+    body[data-print] .guide{display:none;}
+    body[data-print]{background:#fff;padding:0;}
+    body[data-print] .stage{display:block;}
+    body[data-print] .stage>figure{display:block;margin:0;align-items:initial;gap:0;}
+    body[data-print] figcaption{display:none;}
+    body[data-print] .sign,body[data-print] .card,body[data-print] .sheet{box-shadow:none;}
+    body[data-print] .sign-holder,body[data-print] .sheet-holder{width:auto;height:auto;overflow:visible;}
+    body[data-print] .sign,body[data-print] .sheet{transform:none;}
+    body[data-print="sign"] #fig-card,body[data-print="sign"] #fig-cards,
+    body[data-print="card"] #fig-sign,body[data-print="card"] #fig-cards,
+    body[data-print="cards"] #fig-sign,body[data-print="cards"] #fig-card{display:none !important;}
+  }
+
+  /* ============================ PRINT ============================ */
+  @media print{
+    .guide{display:none;}
+    body{background:#fff;}
+    .stage,.stage>figure{display:block;margin:0;}
+    figcaption{display:none;}
+    .sign,.card,.sheet{box-shadow:none;}
+    .sign-holder,.sheet-holder{width:auto;height:auto;overflow:visible;}
+    .sign,.sheet{transform:none;}
+    body[data-print="sign"] #fig-card,body[data-print="sign"] #fig-cards,
+    body[data-print="card"] #fig-sign,body[data-print="card"] #fig-cards,
+    body[data-print="cards"] #fig-sign,body[data-print="cards"] #fig-card{display:none !important;}
+  }
+</style>
+</head>
+<body data-print="">
+
+  <div class="guide">
+    <h1>Elbow Room — The Event Hour</h1>
+    <p>Two print artifacts for a same-day event table. Print with <span class="k">&ldquo;Background graphics&rdquo; ON</span>
+      so the navy and gold read; borderless if the printer allows.</p>
+    <p><b>Table sign</b> — US Letter portrait (8.5&times;11in), legible from 6 feet. <b>Counter cards</b> —
+      four quarter-page cards on one US Letter sheet, cut on the cross.</p>
+    <p>Render targets (headless Edge <code>--print-to-pdf</code>): <code>?print=sign</code>,
+      <code>?print=cards</code> (4-up sheet), <code>?print=card</code> (single card proof).</p>
+    <p>Event attribution code via <code>?code=ENDLESS40</code> (default) &middot; <code>?code=FLEX40</code> for the next event.
+      Whatever code you pass is stamped on both artifacts.</p>
+  </div>
+
+  <div class="stage">
+
+    <!-- ============ TABLE SIGN ============ -->
+    <figure id="fig-sign">
+      <figcaption>Table sign · US Letter portrait</figcaption>
+      <div class="sign-holder">
+        <div class="sign" id="sign">
+          <div class="arc arc-1"></div>
+          <div class="arc arc-2"></div>
+
+          <div class="sign-eyebrow">Today only · book at the table</div>
+          <div class="sign-head">THE EVENT HOUR</div>
+
+          <div class="sign-hero">
+            <div class="prices">
+              <span class="now">$40</span>
+              <span class="was strike">$85</span>
+            </div>
+            <div class="sub">Your first 60-minute session. Normally <b>$85</b>.</div>
+          </div>
+
+          <div class="sign-guard">
+            <span>Book at the table</span><span class="sep">·</span>
+            <span>today only</span><span class="sep">·</span>
+            <span>first 10 bookings</span>
+          </div>
+
+          <div class="ladder-wrap">
+            <div class="ladder-lbl">Your price ladder</div>
+            <div class="ladder">
+              <div class="step s1">
+                <div class="bar"><span class="p">$40</span></div>
+                <div class="cap"><div class="t">Today</div><div class="d">Event Hour</div></div>
+              </div>
+              <div class="arrow">&rarr;</div>
+              <div class="step s2">
+                <div class="bar"><span class="p">$60</span></div>
+                <div class="cap"><div class="t">Next visit</div><div class="d">new-client credit</div></div>
+              </div>
+              <div class="arrow">&rarr;</div>
+              <div class="step s3">
+                <div class="bar"><span class="p">$85</span></div>
+                <div class="cap"><div class="t">After that</div><div class="d">standard rate</div></div>
+              </div>
+            </div>
+            <div class="ladder-note">The Event Hour does not use up your new-client credit.
+              <b>It still applies to your next visit at $60</b>, then standard after that.</div>
+          </div>
+
+          <div class="sign-foot">
+            <div class="brand">
+              <img src="../images/elbowroom/mark-gold-400.png" alt="Elbow Room emblem">
+              <div>
+                <div class="wm">ELBOW ROOM</div>
+                <div class="sb">Massage Therapy</div>
+              </div>
+            </div>
+            <div class="code">
+              <div class="k">Event code</div>
+              <div class="v js-code">ENDLESS40</div>
+            </div>
+            <div class="book">
+              <div class="ml">Scan to see the standing offer</div>
+              <div class="qr-tile"><img src="../images/elbowroom/qr-book.png" alt="Scan to book at elbowroommassage.com/book"></div>
+            </div>
+          </div>
+
+          <div class="sign-fine">
+            Eligibility: your <b>first 60-minute session with Elbow Room</b> (new clients, or existing chair clients
+            who have never booked an hour). One per person. Appointment must be within 30 days. 24-hour cancellation.
+            Not combinable with the first-visit credit today; that credit applies to your <b>next visit</b>.
+            Book at elbowroommassage.com/book. Alex Adamczyk, LMT · Georgia License #MT013193.
+          </div>
+        </div>
+      </div>
+    </figure>
+
+    <!-- ============ SINGLE COUNTER CARD (proof) ============ -->
+    <figure id="fig-card">
+      <figcaption>Counter card · quarter page</figcaption>
+      <div class="card" id="card">
+        <div class="arc arc-1"></div>
+        <div class="c-top">
+          <img src="../images/elbowroom/mark-gold-400.png" alt="Elbow Room emblem">
+          <span class="wm">ELBOW ROOM</span>
+        </div>
+        <div class="c-eyebrow">The Event Hour</div>
+        <div class="c-hero"><span class="now">$40</span><span class="was strike">$85</span></div>
+        <div class="c-sub">Your first 60-minute session. Normally <b>$85</b>.</div>
+        <div class="c-guard"><span>book at the table</span> <span class="sep">·</span> <span>today only</span> <span class="sep">·</span> <span>first 10</span></div>
+
+        <div class="c-ladder">
+          <div class="c-step s1"><div class="bar"><span class="p">$40</span></div><div class="l">Today</div></div>
+          <div class="arrow">&rarr;</div>
+          <div class="c-step s2"><div class="bar"><span class="p">$60</span></div><div class="l">Next visit</div></div>
+          <div class="arrow">&rarr;</div>
+          <div class="c-step s3"><div class="bar"><span class="p">$85</span></div><div class="l">After that</div></div>
+        </div>
+        <div class="c-note">The $40 does not use up your new-client credit.
+          <b>$60 next visit</b>, then $85 standard.</div>
+
+        <div class="c-foot">
+          <div class="code">
+            <div class="k">Event code</div>
+            <div class="v js-code">ENDLESS40</div>
+            <div class="bk">elbowroommassage.com/book</div>
+          </div>
+          <div class="book">
+            <div class="ml">Scan to book</div>
+            <div class="qr-tile"><img src="../images/elbowroom/qr-book.png" alt="Scan to book at elbowroommassage.com/book"></div>
+          </div>
+        </div>
+        <div class="c-fine">
+          <b>First 60-minute session with Elbow Room</b> (new clients, or chair clients who never booked an hour).
+          One per person. Book within 30 days. 24-hour cancellation. Not combinable with the first-visit credit today;
+          credit applies next visit. Georgia License #MT013193.
+        </div>
+      </div>
+    </figure>
+
+    <!-- ============ 4-UP SHEET ============ -->
+    <figure id="fig-cards">
+      <figcaption>Counter cards · 4-up sheet</figcaption>
+      <div class="sheet-holder">
+        <div class="sheet" id="sheet">
+          <div class="card-grid" id="card-grid"></div>
+        </div>
+      </div>
+    </figure>
+
+  </div>
+
+<script>
+  // Event attribution code. Default ENDLESS40 (this event); FLEX40 for the next one. Whatever ?code=
+  // is passed is uppercased and stamped into every .js-code slot before the card is cloned, so the
+  // 4-up sheet can never drift from the single card. Same param serves every future event.
+  (function(){
+    var raw = (new URLSearchParams(location.search).get('code') || 'ENDLESS40').trim().toUpperCase();
+    var code = /^[A-Z0-9]{2,16}$/.test(raw) ? raw : 'ENDLESS40';   // guard against junk in the URL
+    var slots = document.querySelectorAll('.js-code');
+    for (var i=0;i<slots.length;i++){ slots[i].textContent = code; }
+    document.title = 'Elbow Room — The Event Hour (' + code + ')';
+  })();
+
+  // Clone the finished counter card into the 4-up sheet so the sheet can never drift from the card.
+  (function(){
+    var card = document.getElementById('card');
+    var grid = document.getElementById('card-grid');
+    for (var i=0;i<4;i++){ grid.appendChild(card.cloneNode(true)); }
+  })();
+
+  // Print/screenshot target from ?print=sign|cards|card. Same nodes serve preview, PNG, and PDF.
+  (function(){
+    var p = new URLSearchParams(location.search).get('print') || '';
+    document.body.setAttribute('data-print', p);
+    var st = document.createElement('style');
+    st.textContent = (p === 'card')
+      ? '@page{size:4.25in 5.5in;margin:0;}'
+      : '@page{size:8.5in 11in;margin:0;}';
+    document.head.appendChild(st);
+  })();
+</script>
+</body>
+</html>
