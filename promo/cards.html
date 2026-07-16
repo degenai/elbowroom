@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Elbow Room — Business Cards (print sheet)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Unlisted print target: kept out of search and off the site nav. Not linked from any page,
+     no sitemap entry. This is a propaganda-shelf print page (like /promo on People's Elbow),
+     used to render the business cards to PDF via headless Edge. To publish a downloads index
+     later, link it deliberately; otherwise it stays unlisted. -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#112038">
+<link rel="icon" href="../images/elbowroom/favicon-32.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1b2c4d; --navy-mid:#1f3357; --navy-deep:#112038; --navy-900:#0b1626;
+    --gold:#c49a48; --gold-light:#dcc06a; --gold-deep:#8a6a2e;
+    --green:#3c6a4d; --cream:#f6f3ec; --paper:#fbf9f4; --sand:#efe9dd;
+    --ink:#16203a; --muted:#5b6473; --muted-2:#9aa1ad; --line:rgba(27,44,77,.14);
+    --f-wordmark:'Cinzel',Georgia,serif; --f-display:'Fraunces',Georgia,serif;
+    --f-body:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+
+  /* ============================ THE CARD FACES ============================ */
+  .card{
+    width:3.5in; height:2in; overflow:hidden; position:relative;
+    background:var(--paper); color:var(--ink); font-family:var(--f-body);
+    display:flex; flex-direction:column;
+  }
+
+  /* ---- FRONT: brand + offer, warm paper with a navy contact rail ---- */
+  .card-front{background:var(--paper);}
+  .cf-body{
+    flex:1; min-height:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:0.06in 0.24in 0.05in; gap:2pt; overflow:hidden;
+  }
+  .cf-emblem{height:0.38in; width:auto; display:block;}
+  .cf-word{margin-top:1pt;}
+  .cf-word .name{
+    font-family:var(--f-wordmark); font-weight:700; color:var(--navy);
+    font-size:15pt; letter-spacing:.16em; line-height:1; text-indent:.16em;
+  }
+  .cf-word .sub{
+    font-family:var(--f-body); font-weight:600; color:var(--gold-deep);
+    font-size:6pt; letter-spacing:.42em; text-transform:uppercase; text-indent:.42em; margin-top:3pt;
+  }
+  .cf-offer{
+    margin-top:2pt; display:inline-flex; align-items:baseline; gap:5pt;
+    background:rgba(196,154,72,.12); border:0.8pt solid rgba(196,154,72,.55);
+    border-radius:999px; padding:3pt 11pt;
+  }
+  .cf-offer .amt{font-family:var(--f-display); font-weight:600; color:var(--gold-deep); font-size:13pt; line-height:1;}
+  .cf-offer .txt{font-family:var(--f-body); font-weight:600; color:var(--navy); font-size:8.5pt; letter-spacing:.01em;}
+  .cf-fine{font-size:5.7pt; color:var(--muted); letter-spacing:.02em; line-height:1.2; max-width:2.7in;}
+  .cf-name{margin-top:5pt;}
+  .cf-name .who{font-family:var(--f-display); font-weight:500; color:var(--navy); font-size:9.5pt; line-height:1;}
+  .cf-name .role{font-family:var(--f-body); font-weight:600; color:var(--gold-deep); font-size:6.3pt; letter-spacing:.26em; text-transform:uppercase; text-indent:.26em; margin-top:3pt;}
+  .cf-name .lic{font-size:5.7pt; color:var(--muted); letter-spacing:.14em; text-transform:uppercase; margin-top:3pt;}
+  .cf-rail{
+    background:var(--navy-deep); color:var(--cream);
+    display:flex; align-items:center; justify-content:center; gap:9pt;
+    padding:4.5pt 0; font-size:7pt; letter-spacing:.02em;
+  }
+  .cf-rail .site{color:var(--gold-light); font-weight:600;}
+  .cf-rail .dot{color:rgba(220,192,106,.5);}
+  .cf-rail .ig{color:var(--cream); opacity:.9;}
+
+  /* ---- BACK: appointment card, navy header over writable cream ---- */
+  .card-back{background:var(--paper);}
+  .cb-head{
+    background:var(--navy-deep); color:var(--cream);
+    display:flex; align-items:center; gap:7pt; padding:7pt 0.26in 6.5pt;
+  }
+  .cb-head img{height:15pt; width:auto; opacity:.95;}
+  .cb-head .h{font-family:var(--f-display); font-weight:500; font-size:11.5pt; letter-spacing:.01em; color:#fff;}
+  .cb-head .h .amp{color:var(--gold-light);}
+  .cb-body{flex:1; min-height:0; padding:0.12in 0.26in 0.05in; display:flex; flex-direction:column; justify-content:center; gap:10pt;}
+  .cb-row{display:flex; gap:0.26in;}
+  .cb-field{flex:1;}
+  .cb-field.with{flex:1.15;}
+  .cb-line{border-bottom:1pt solid var(--navy); height:15pt;}
+  .cb-lab{font-size:6pt; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); margin-top:3.5pt;}
+  .cb-foot{
+    display:flex; align-items:center; gap:0.16in; padding:5pt 0.26in 5pt;
+  }
+  .cb-foot-text{
+    flex:1; font-size:6pt; color:var(--muted-2); letter-spacing:.03em; line-height:1.5; text-align:left;
+  }
+  .cb-foot-text b{color:var(--muted); font-weight:600;}
+  /* Booking QR: navy-on-cream, anchored beside the footer so it never crowds the
+     write-in rules. Every handed card becomes a booking kiosk for /book. The "scan to
+     book" microlabel sits to the QR's left, in the footer's soft gray. */
+  .cb-qr{display:flex; align-items:center; gap:5pt; flex:none;}
+  .cb-qr img{width:0.46in; height:0.46in; display:block; flex:none;}
+  .cb-qr .cb-qr-lab{
+    font-size:5pt; letter-spacing:.16em; text-transform:uppercase; color:var(--muted-2);
+    line-height:1.3; text-align:right; max-width:0.34in;
+  }
+
+  /* small gold hairline used on front */
+  .hair{width:0.5in; height:1pt; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:1.5pt auto;}
+
+  /* ============================ 10-UP PRINT SHEET (Avery 5371) ============================ */
+  .sheet{
+    width:8.5in; height:11in; background:#fff; position:relative;
+    padding:0.5in 0.75in; /* 2 cols x 5 rows, no gutter */
+  }
+  .sheet-grid{display:grid; grid-template-columns:3.5in 3.5in; grid-template-rows:repeat(5,2in);}
+  .sheet .card{outline:0.3pt dashed rgba(27,44,77,.35); outline-offset:-0.15pt;}
+  .sheet-note{position:absolute; top:0.16in; left:0; right:0; text-align:center; font-size:7pt; color:var(--muted); font-family:var(--f-body);}
+
+  /* ============================ SCREEN REVIEW CHROME ============================ */
+  @media screen{
+    body{background:#e7e3da; font-family:var(--f-body); color:var(--ink); padding:26px 18px 60px;}
+    .guide{max-width:760px; margin:0 auto 26px; background:#fff; border:1px solid #d9d3c6; border-radius:14px; padding:20px 24px; box-shadow:0 10px 30px rgba(17,32,56,.08);}
+    .guide h1{font-family:var(--f-display); font-weight:600; font-size:22px; color:var(--navy); margin-bottom:6px;}
+    .guide p{font-size:13.5px; line-height:1.55; color:#41485a; margin-bottom:8px;}
+    .guide code{background:#f1ede4; border-radius:5px; padding:1px 6px; font-size:12.5px; color:var(--navy-deep);}
+    .guide .k{color:var(--gold-deep); font-weight:600;}
+    .stage{display:flex; flex-wrap:wrap; gap:30px; align-items:flex-start; justify-content:center;}
+    .stage>figure{margin:0; display:flex; flex-direction:column; align-items:center; gap:9px;}
+    figcaption{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:#6b7280; font-weight:600;}
+    .card{box-shadow:0 12px 34px rgba(17,32,56,.22); border-radius:8px;}
+    .sheet{transform:scale(.62); transform-origin:top center; box-shadow:0 18px 50px rgba(17,32,56,.25);}
+    .sheet-holder{width:calc(8.5in * .62); height:calc(11in * .62); overflow:hidden;}
+    /* screenshot isolation: ?print=front|back|sheet renders only that target at native size */
+    body[data-print] .guide{display:none;}
+    body[data-print]{background:#fff; padding:0;}
+    body[data-print] .stage{display:block;}
+    body[data-print] .stage>figure{display:block; margin:0; align-items:initial; gap:0;}
+    body[data-print] figcaption{display:none;}
+    body[data-print] .card{box-shadow:none; border-radius:0;}
+    body[data-print] .sheet-holder{width:auto;height:auto;overflow:visible;}
+    body[data-print] .sheet{transform:none; box-shadow:none;}
+    body[data-print="front"] #fig-back, body[data-print="front"] #fig-sheet,
+    body[data-print="back"] #fig-front, body[data-print="back"] #fig-sheet,
+    body[data-print="sheet"] #fig-front, body[data-print="sheet"] #fig-back{display:none !important;}
+  }
+
+  /* ============================ PRINT ============================ */
+  @media print{
+    .guide{display:none;}
+    body{background:#fff;}
+    .stage, .stage>figure{display:block; margin:0;}
+    figcaption{display:none;}
+    .card{box-shadow:none; border-radius:0;}
+    .sheet{box-shadow:none;}
+    .sheet-holder{width:auto;height:auto;overflow:visible;}
+    .sheet .sheet-inner{transform:none;}
+    body[data-print="front"] #fig-back, body[data-print="front"] #fig-sheet,
+    body[data-print="back"] #fig-front, body[data-print="back"] #fig-sheet,
+    body[data-print="sheet"] #fig-front, body[data-print="sheet"] #fig-back{display:none !important;}
+  }
+</style>
+</head>
+<body data-print="">
+
+  <div class="guide">
+    <h1>Elbow Room — business cards</h1>
+    <p>Standard US business card, <b>3.5in &times; 2in</b>. Two faces: a brand + offer front and a
+      write-in appointment back (the differentiator). Print at <span class="k">100% scale</span> on
+      cardstock and turn <span class="k">ON &ldquo;Background graphics&rdquo;</span> so the navy and
+      gold read.</p>
+    <p>Render targets (headless Edge <code>--print-to-pdf</code>): <code>?print=front</code>,
+      <code>?print=back</code>, <code>?print=sheet</code> (10-up on US Letter, Avery 5371).</p>
+  </div>
+
+  <div class="stage">
+    <figure id="fig-front">
+      <figcaption>Front</figcaption>
+      <div class="card card-front" id="front">
+        <div class="cf-body">
+          <img class="cf-emblem" src="../images/elbowroom/mark-400.png" alt="Elbow Room emblem">
+          <div class="cf-word">
+            <div class="name">ELBOW ROOM</div>
+            <div class="sub">Massage Therapy</div>
+          </div>
+          <div class="hair"></div>
+          <div class="cf-offer">
+            <span class="amt">$25 off</span><span class="txt">your first visit</span>
+          </div>
+          <div class="cf-fine">First 15-minute massage free, or $25 toward your first hour.</div>
+          <div class="cf-name">
+            <div class="who">Alex Adamczyk, LMT</div>
+            <div class="lic">Georgia License #MT013193</div>
+          </div>
+        </div>
+        <div class="cf-rail">
+          <span class="site">elbowroommassage.com/book</span>
+          <span class="dot">&bull;</span>
+          <span class="ig">@elbowroommassage</span>
+        </div>
+      </div>
+    </figure>
+
+    <figure id="fig-back">
+      <figcaption>Back</figcaption>
+      <div class="card card-back" id="back">
+        <div class="cb-head">
+          <img src="../images/elbowroom/mark-gold-400.png" alt="">
+          <span class="h">Your next appointment</span>
+        </div>
+        <div class="cb-body">
+          <div class="cb-row">
+            <div class="cb-field"><div class="cb-line"></div><div class="cb-lab">Date</div></div>
+            <div class="cb-field"><div class="cb-line"></div><div class="cb-lab">Time</div></div>
+          </div>
+          <div class="cb-row">
+            <div class="cb-field with"><div class="cb-line"></div><div class="cb-lab">With</div></div>
+          </div>
+        </div>
+        <div class="cb-foot">
+          <div class="cb-foot-text">Need to change it? <b>elbowroommassage.com</b> &nbsp;&bull;&nbsp; hello@elbowroommassage.com</div>
+          <div class="cb-qr">
+            <span class="cb-qr-lab">Scan to book</span>
+            <img src="../images/elbowroom/qr-book.png" alt="Scan to book at elbowroommassage.com/book">
+          </div>
+        </div>
+      </div>
+    </figure>
+
+    <figure id="fig-sheet">
+      <figcaption>10-up sheet</figcaption>
+      <div class="sheet-holder">
+        <div class="sheet" id="sheet">
+          <div class="sheet-note">Elbow Room business cards &middot; 10-up &middot; Avery 5371 &middot; print at 100%, cut on the guides</div>
+          <div class="sheet-grid" id="sheet-grid"></div>
+        </div>
+      </div>
+    </figure>
+  </div>
+
+<script>
+  // Card holder. Alex is the default (the static markup above). Render another person's
+  // edition with ?person=<key> — the front's name block is swapped before anything is cloned,
+  // so the 10-up sheet stays in sync. NEVER invent a license number: only add `lic` when we
+  // actually hold that credential (Morgan is a DC; we don't hold his license, so it's omitted).
+  var PEOPLE = {
+    // Neutral edition — usable day one. Name + credential only: no title (the residency
+    // role is an unapproved pitch) and no license (we don't hold Morgan's DC number).
+    morgan: {
+      who: 'Morgan Stauffer, DC'
+    },
+    // Pitch edition — carries the gold "Director of Residencies" line. Kept separate so the
+    // neutral card can never ship the unapproved title; hand this one out only if he buys in.
+    'morgan-residencies': {
+      who:  'Morgan Stauffer, DC',
+      role: 'Director of Residencies'   // names the residency-network model — the card is the pitch
+    }
+  };
+  (function(){
+    var key = (new URLSearchParams(location.search).get('person') || '').toLowerCase();
+    var p = PEOPLE[key];
+    if (!p) return;                                 // default person keeps the static markup
+    var el = document.querySelector('#front .cf-name');
+    if (!el) return;
+    var html = '<div class="who">' + p.who + '</div>';
+    if (p.role) html += '<div class="role">' + p.role + '</div>';
+    if (p.lic)  html += '<div class="lic">'  + p.lic  + '</div>';
+    el.innerHTML = html;
+  })();
+
+  // Clone the finished front face into the 10-up sheet so the sheet can never drift from the card.
+  (function(){
+    var front = document.getElementById('front');
+    var grid = document.getElementById('sheet-grid');
+    for (var i=0;i<10;i++){ grid.appendChild(front.cloneNode(true)); }
+  })();
+  // Print/screenshot target from ?print=front|back|sheet. Same nodes serve preview, PNG, and PDF.
+  (function(){
+    var p = new URLSearchParams(location.search).get('print') || '';
+    document.body.setAttribute('data-print', p);
+    var st = document.createElement('style');
+    st.textContent = (p === 'sheet')
+      ? '@page{size:8.5in 11in;margin:0;}'
+      : '@page{size:3.5in 2in;margin:0;}';
+    document.head.appendChild(st);
+  })();
+</script>
+</body>
+</html>
