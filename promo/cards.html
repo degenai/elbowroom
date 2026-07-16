@@ -19,7 +19,7 @@
     --navy:#1b2c4d; --navy-mid:#1f3357; --navy-deep:#112038; --navy-900:#0b1626;
     --gold:#c49a48; --gold-light:#dcc06a; --gold-deep:#8a6a2e;
     --green:#3c6a4d; --cream:#f6f3ec; --paper:#fbf9f4; --sand:#efe9dd;
-    --ink:#16203a; --muted:#5b6473; --line:rgba(27,44,77,.14);
+    --ink:#16203a; --muted:#5b6473; --muted-2:#9aa1ad; --line:rgba(27,44,77,.14);
     --f-wordmark:'Cinzel',Georgia,serif; --f-display:'Fraunces',Georgia,serif;
     --f-body:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
   }
@@ -36,9 +36,9 @@
   .card-front{background:var(--paper);}
   .cf-body{
     flex:1; min-height:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
-    text-align:center; padding:0.1in 0.24in 0.05in; gap:2.5pt; overflow:hidden;
+    text-align:center; padding:0.06in 0.24in 0.05in; gap:2pt; overflow:hidden;
   }
-  .cf-emblem{height:0.42in; width:auto; display:block;}
+  .cf-emblem{height:0.38in; width:auto; display:block;}
   .cf-word{margin-top:1pt;}
   .cf-word .name{
     font-family:var(--f-wordmark); font-weight:700; color:var(--navy);
@@ -56,9 +56,10 @@
   .cf-offer .amt{font-family:var(--f-display); font-weight:600; color:var(--gold-deep); font-size:13pt; line-height:1;}
   .cf-offer .txt{font-family:var(--f-body); font-weight:600; color:var(--navy); font-size:8.5pt; letter-spacing:.01em;}
   .cf-fine{font-size:5.7pt; color:var(--muted); letter-spacing:.02em; line-height:1.2; max-width:2.7in;}
-  .cf-name{margin-top:1pt;}
-  .cf-name .who{font-family:var(--f-display); font-weight:500; color:var(--navy); font-size:9pt; line-height:1;}
-  .cf-name .lic{font-size:5.7pt; color:var(--muted); letter-spacing:.14em; text-transform:uppercase; margin-top:2.5pt;}
+  .cf-name{margin-top:5pt;}
+  .cf-name .who{font-family:var(--f-display); font-weight:500; color:var(--navy); font-size:9.5pt; line-height:1;}
+  .cf-name .role{font-family:var(--f-body); font-weight:600; color:var(--gold-deep); font-size:6.3pt; letter-spacing:.26em; text-transform:uppercase; text-indent:.26em; margin-top:3pt;}
+  .cf-name .lic{font-size:5.7pt; color:var(--muted); letter-spacing:.14em; text-transform:uppercase; margin-top:3pt;}
   .cf-rail{
     background:var(--navy-deep); color:var(--cream);
     display:flex; align-items:center; justify-content:center; gap:9pt;
@@ -84,9 +85,9 @@
   .cb-line{border-bottom:1pt solid var(--navy); height:15pt;}
   .cb-lab{font-size:6pt; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); margin-top:3.5pt;}
   .cb-foot{
-    padding:5pt 0.26in 7pt; font-size:6pt; color:var(--muted); letter-spacing:.03em; text-align:center;
+    padding:9pt 0.26in 8pt; font-size:6pt; color:var(--muted-2); letter-spacing:.03em; line-height:1.5; text-align:center;
   }
-  .cb-foot b{color:var(--navy); font-weight:600;}
+  .cb-foot b{color:var(--muted); font-weight:600;}
 
   /* small gold hairline used on front */
   .hair{width:0.5in; height:1pt; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:1.5pt auto;}
@@ -216,6 +217,28 @@
   </div>
 
 <script>
+  // Card holder. Alex is the default (the static markup above). Render another person's
+  // edition with ?person=<key> — the front's name block is swapped before anything is cloned,
+  // so the 10-up sheet stays in sync. NEVER invent a license number: only add `lic` when we
+  // actually hold that credential (Morgan is a DC; we don't hold his license, so it's omitted).
+  var PEOPLE = {
+    morgan: {
+      who:  'Morgan Stauffer, DC',
+      role: 'Director of Residencies'   // names the residency-network model — the card is the pitch
+    }
+  };
+  (function(){
+    var key = (new URLSearchParams(location.search).get('person') || '').toLowerCase();
+    var p = PEOPLE[key];
+    if (!p) return;                                 // default person keeps the static markup
+    var el = document.querySelector('#front .cf-name');
+    if (!el) return;
+    var html = '<div class="who">' + p.who + '</div>';
+    if (p.role) html += '<div class="role">' + p.role + '</div>';
+    if (p.lic)  html += '<div class="lic">'  + p.lic  + '</div>';
+    el.innerHTML = html;
+  })();
+
   // Clone the finished front face into the 10-up sheet so the sheet can never drift from the card.
   (function(){
     var front = document.getElementById('front');
