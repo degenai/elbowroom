@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Events &amp; Appearances | Elbow Room Massage Therapy</title>
+  <meta name="description" content="Where to find Elbow Room out in the community: upcoming events with a live countdown, plus a look back at past appearances around Woodstock and metro Atlanta.">
+  <!-- Unlisted placeholder page: kept out of search and off the nav until real events are live.
+       To go public: remove this noindex, add the nav/footer link, and add the sitemap entry. -->
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#1b2c4d">
+  <link rel="canonical" href="https://elbowroommassage.com/events.html">
+  <meta property="og:url" content="https://elbowroommassage.com/events.html">
+  <meta property="og:site_name" content="Elbow Room Massage Therapy">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Events &amp; Appearances | Elbow Room Massage Therapy">
+  <meta property="og:description" content="Where to find Elbow Room out in the community: upcoming events with a live countdown, plus a look back at past appearances.">
+  <meta property="og:image" content="https://elbowroommassage.com/images/elbowroom/og.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Events &amp; Appearances | Elbow Room Massage Therapy">
+  <meta name="twitter:description" content="Where to find Elbow Room out in the community: upcoming events with a live countdown, plus a look back at past appearances.">
+  <meta name="twitter:image" content="https://elbowroommassage.com/images/elbowroom/og.jpg">
+  <link rel="icon" href="images/elbowroom/favicon-32.png" type="image/png">
+  <link rel="apple-touch-icon" href="images/elbowroom/favicon-180.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+  <link rel="stylesheet" href="css/elbowroom.css">
+</head>
+<body data-er-page="events">
+  <div id="er-header"></div>
+  <div class="er-spine" aria-hidden="true"></div>
+  <div class="er-progress" aria-hidden="true"></div>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <p class="crumbs"><a href="index.html">Home</a> / Events</p>
+        <span class="eyebrow">Out in the Community</span>
+        <h1>Events &amp; Appearances</h1>
+        <p class="lead">Elbow Room does not stay in the treatment room. This is where to catch us out in the community: markets, events, and on-site days around Woodstock and the greater Atlanta metro. Upcoming dates count down here, and past appearances collect below.</p>
+      </div>
+    </section>
+
+    <!-- UPCOMING -->
+    <section class="section bg-cream">
+      <div class="container narrow">
+        <div class="section-head center" data-reveal>
+          <span class="eyebrow center">On the Calendar</span>
+          <h2>Where to find Elbow Room next</h2>
+          <p class="lead">The next firm date runs a live countdown. Anything else on the calendar lists just below it.</p>
+        </div>
+        <!-- js/elbowroom-events.js fills these from its upcomingEvents array.
+             Empty array renders the calm "being scheduled" state; no timer runs. -->
+        <div class="event-countdown" id="featured-event"></div>
+        <ul class="upcoming-events" id="upcoming-events"></ul>
+      </div>
+    </section>
+
+    <!-- PAST APPEARANCES -->
+    <section class="section bg-paper">
+      <div class="container">
+        <div class="section-head center" data-reveal>
+          <span class="eyebrow center">Looking Back</span>
+          <h2>Past Appearances</h2>
+          <p class="lead">A look back at where the chair has been. Photos and recaps land here after each event.</p>
+        </div>
+        <!-- js/elbowroom-events.js fills this from its pastAppearances array.
+             Empty array renders the "photos coming soon" placeholder grid. -->
+        <div id="past-appearances"></div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section bg-cream">
+      <div class="container">
+        <div class="er-cta" data-reveal>
+          <span class="eyebrow center" style="color:var(--gold-light);">Bring Us Out</span>
+          <h2>Hosting something? Let's set it up.</h2>
+          <p class="lead">Planning a market, a team day, or a community event around Woodstock or the Atlanta metro? Send a note with the date and roughly how many people, and we will bring the chair.</p>
+          <div class="btn-row center mt-2">
+            <a href="index.html#contact" class="btn btn-gold btn-lg">Get in Touch <span class="arrow" aria-hidden="true">&rarr;</span></a>
+            <a href="book.html" class="btn btn-ghost btn-lg">Book a Session</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="er-footer"></div>
+  <script src="js/elbowroom-components.js"></script>
+  <script type="module" src="js/elbowroom-events.js"></script>
+</body>
+</html>
