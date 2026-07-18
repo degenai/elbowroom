@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#112038">
-<title>Elbow Room — Promo Appointment Sign-Up</title>
+<title>Elbow Room — Event Hour Sign-Up</title>
 <link rel="icon" href="../images/elbowroom/favicon-32.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,7 +27,7 @@
   .guide button:hover{background:#243a63}
   .guide button:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
   .pages{display:flex;flex-direction:column;align-items:center;gap:28px}
-  .sheet{width:8.5in;height:11in;background:var(--paper);box-shadow:0 14px 40px rgba(17,32,56,.2);padding:.24in .32in .2in;display:grid;grid-template-rows:auto auto auto minmax(0,1fr) auto;overflow:hidden;position:relative}
+  .sheet{width:8.5in;height:11in;background:var(--paper);box-shadow:0 14px 40px rgba(17,32,56,.2);padding:.24in .32in .2in;display:grid;grid-template-rows:auto auto auto auto minmax(0,1fr) auto;overflow:hidden;position:relative}
   .sheet::after{content:"";position:absolute;right:-.8in;top:-.8in;width:2.5in;height:2.5in;border:1pt solid rgba(196,154,72,.15);border-radius:50%;pointer-events:none}
   .head{display:grid;grid-template-columns:1.7in 1fr .72in;align-items:center;gap:.18in;padding-bottom:.11in;border-bottom:1pt solid rgba(196,154,72,.45);position:relative;z-index:1}
   .brand{display:flex;align-items:center;gap:.09in}
@@ -40,16 +40,27 @@
   .title p{margin-top:5pt;font-size:9pt;line-height:1.25;color:var(--muted)}
   .qr{text-align:center;font-size:6.5pt;font-weight:700;line-height:1.1;color:var(--navy);text-transform:uppercase;letter-spacing:.05em}
   .qr img{display:block;width:.58in;height:.58in;margin:0 auto 3pt;padding:3pt;background:#fff;border:1pt solid rgba(27,44,77,.14);border-radius:5pt}
+  .deal{margin-top:.08in;display:grid;grid-template-columns:1fr 1.92in;border:1pt solid rgba(196,154,72,.65);border-radius:6pt;overflow:hidden;position:relative;z-index:1}
+  .deal-main{min-height:.55in;background:var(--navy-deep);color:var(--cream);display:flex;align-items:center;gap:.13in;padding:.06in .13in}
+  .deal-price{font-family:var(--display);font-size:27pt;font-weight:600;line-height:.9;color:var(--gold-light);white-space:nowrap}
+  .deal-copy strong{display:block;font-size:9.5pt;line-height:1.1;letter-spacing:.045em}
+  .deal-copy span{display:block;margin-top:3pt;font-size:6.8pt;line-height:1.2;color:#e5e7eb}
+  .deal-alt{background:#efe9dd;color:var(--navy);display:flex;flex-direction:column;justify-content:center;padding:.055in .11in;border-left:1pt solid rgba(196,154,72,.4)}
+  .deal-alt span{font-size:6.5pt;font-weight:700;line-height:1;text-transform:uppercase;letter-spacing:.13em;color:var(--gold-deep)}
+  .deal-alt strong{margin-top:3pt;font-family:var(--display);font-size:14pt;line-height:1;color:var(--navy)}
+  .deal-alt small{margin-top:3pt;font-size:6.5pt;line-height:1.15;color:var(--muted)}
   .daybar{margin-top:.11in;background:var(--navy-deep);color:var(--cream);border-radius:6pt;padding:.09in .13in;display:flex;align-items:baseline;justify-content:space-between;gap:.18in}
   .daybar h3{font-family:var(--wordmark);font-size:13pt;line-height:1;letter-spacing:.07em;color:var(--gold-light)}
   .daybar p{font-size:8.5pt;line-height:1.2;text-align:right;color:#eef2f8}
   .daybar b{color:var(--gold-light)}
-  .column-head{display:grid;grid-template-columns:.86in 1fr 1.72in;gap:.1in;padding:.07in .08in .04in;font-size:7.5pt;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep)}
+  .column-head{display:grid;grid-template-columns:.78in 1fr 1.55in 2.04in;gap:.08in;padding:.07in .08in .04in;font-size:7.2pt;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-deep)}
   .slots{min-height:0;display:flex;flex-direction:column;border-top:1pt solid var(--line)}
-  .slot{flex:1;min-height:.205in;max-height:.31in;display:grid;grid-template-columns:.86in 1fr 1.72in;gap:.1in;align-items:end;padding:0 .08in .035in;border-bottom:.7pt dotted rgba(27,44,77,.34);font-size:11pt;line-height:1}
+  .slot{flex:1;min-height:.19in;max-height:.29in;display:grid;grid-template-columns:.78in 1fr 1.55in 2.04in;gap:.08in;align-items:end;padding:0 .08in .03in;border-bottom:.7pt dotted rgba(27,44,77,.34);font-size:10.5pt;line-height:1}
   .time{font-weight:700;color:var(--navy)}
   .write{height:.13in;border-bottom:.65pt solid rgba(27,44,77,.55)}
-  .foot{padding-top:.09in;display:grid;grid-template-columns:1fr auto;align-items:end;gap:.18in;font-size:7.8pt;line-height:1.35;color:var(--muted)}
+  .offer-choice{align-self:center;font-size:7.3pt;font-weight:700;line-height:1;letter-spacing:.015em;color:var(--navy);white-space:nowrap}
+  .offer-choice .secondary{color:var(--muted);font-weight:600}
+  .foot{padding-top:.07in;display:grid;grid-template-columns:1fr auto;align-items:end;gap:.16in;font-size:6.8pt;line-height:1.26;color:var(--muted)}
   .foot strong{color:var(--navy)}
   .foot .contact{text-align:right;white-space:nowrap;font-size:8pt;color:var(--navy)}
   .foot .contact b{display:block;font-family:var(--wordmark);letter-spacing:.06em;color:var(--gold-deep)}
@@ -66,8 +77,8 @@
 <body>
   <section class="guide" aria-label="Print instructions">
     <div>
-      <h1>Elbow Room promo sign-up sheets</h1>
-      <p>Five US Letter clipboard pages · 157 conservative starts · July 19 through August 8.<br>Print with background graphics enabled.</p>
+      <h1>Elbow Room Event Hour sign-up sheets</h1>
+      <p>Five Event Hour clipboard pages · $40 full hour first, free 15-minute option second.<br>Print with background graphics enabled.</p>
     </div>
     <button type="button" id="print-sheets">Print all five pages</button>
   </section>
@@ -140,42 +151,57 @@
 
       const title = el('div', 'title');
       title.append(
-        el('h2', '', 'PROMO APPOINTMENT SIGN-UP'),
-        el('p', '', 'Short wellness massage · up to 20 minutes · Alex Adamczyk, LMT')
+        el('h2', '', 'THE EVENT HOUR SIGN-UP'),
+        el('p', '', 'Choose your offer and appointment time · Alex Adamczyk, LMT')
       );
 
       const qr = el('div', 'qr');
       const qrImage = el('img');
       qrImage.src = '../images/elbowroom/qr-book.png';
       qrImage.alt = 'Scan to book at elbowroommassage.com/book';
-      qr.append(qrImage, document.createTextNode('Book online'));
+      qr.append(qrImage, document.createTextNode('Offer details'));
       head.append(brand, title, qr);
+
+      const deal = el('section', 'deal');
+      deal.setAttribute('aria-label', 'Event Hour special: first full hour for $40, with a free 15-minute option');
+      const dealMain = el('div', 'deal-main');
+      const dealCopy = el('div', 'deal-copy');
+      dealCopy.append(
+        el('strong', '', 'BOOK YOUR FIRST FULL HOUR AT THE TABLE TODAY'),
+        el('span', '', 'Normally $85 · first 10 bookings · code ENDLESS40 · appointment within 30 days')
+      );
+      dealMain.append(el('div', 'deal-price', '$40'), dealCopy);
+      const dealAlt = el('div', 'deal-alt');
+      dealAlt.append(el('span', '', 'Other option'), el('strong', '', 'FREE 15 MINUTES'), el('small', '', 'New-client first visit'));
+      deal.append(dealMain, dealAlt);
 
       const daybar = el('div', 'daybar');
       daybar.append(el('h3', '', `${entry.day} · ${entry.date}`), el('p', '', entry.availability));
 
       const columnHead = el('div', 'column-head');
-      columnHead.append(el('span', '', 'Start'), el('span', '', 'Name'), el('span', '', 'Phone'));
+      columnHead.append(el('span', '', 'Start'), el('span', '', 'Name'), el('span', '', 'Phone'), el('span', '', 'Choose offer'));
 
       const slots = el('div', 'slots');
       entry.starts.flatMap(([start, end]) => quarterHours(start, end)).forEach((minute) => {
         const slot = el('div', 'slot');
-        slot.append(el('span', 'time', formatTime(minute)), el('span', 'write'), el('span', 'write'));
+        const offerChoice = el('span', 'offer-choice');
+        offerChoice.append(document.createTextNode('□ $40 HOUR   '), el('span', 'secondary', '□ FREE 15'));
+        slot.append(el('span', 'time', formatTime(minute)), el('span', 'write'), el('span', 'write'), offerChoice);
         slots.append(slot);
       });
 
       const foot = el('footer', 'foot');
       const disclaimer = el('p');
-      const strong = el('strong', '', 'Wellness disclaimer: ');
+      const strong = el('strong', '', 'Offer + wellness terms: ');
       disclaimer.append(
         strong,
-        document.createTextNode('Massage is offered for general wellness and relaxation, not medical diagnosis or treatment. By signing, you voluntarily request a short wellness massage and agree to mention relevant conditions, injuries, surgeries, or pregnancy before the session. Provider: Alex Adamczyk, LMT · GA #MT013193.')
+        document.createTextNode('For a $40 hour, block four consecutive rows. Event Hour applies to a first 60-minute Elbow Room session; new clients or chair clients who have never booked an hour; first 10; one per person; book within 30 days; 24-hour cancellation. Free 15-minute first visit available instead. The $40 hour preserves your new-client credit for next visit. Massage is for general wellness, not diagnosis or treatment. Alex Adamczyk, LMT · GA #MT013193.')
       );
       const contact = el('div', 'contact');
       contact.append(el('b', '', 'ELBOW ROOM'), document.createTextNode('elbowroommassage.com/book'), el('br'), document.createTextNode('@elbowroommassage'));
       foot.append(disclaimer, contact);
 
-      sheet.append(head, daybar, columnHead, slots, foot);
+      sheet.append(head, deal, daybar, columnHead, slots, foot);
       pages.append(sheet);
     });
 
