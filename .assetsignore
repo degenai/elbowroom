@@ -6,6 +6,7 @@ wrangler-email.jsonc
 wrangler-draft-notes.jsonc
 workers
 .wrangler
+**/.hermes-tmp.*
 .gitignore
 .github
 .htmlvalidate.json
