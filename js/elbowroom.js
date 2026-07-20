@@ -73,8 +73,11 @@ function counters() {
     const prefix = el.dataset.prefix || '';
     const decimals = (el.dataset.decimals | 0);
     const render = (v) => { el.textContent = prefix + v.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + suffix; };
+    // Always paint the final value first. If the animation library, the
+    // IntersectionObserver, or anything else in the chain fails, the stat
+    // must read correctly (e.g. "60 min") instead of freezing at "0 min".
     if (reduce || isNaN(target)) { render(target || 0); return; }
-    render(0);
+    render(target);
     onceInView(el, () => {
       const o = { v: 0 };
       animate(o, { v: target, duration: 1600, ease: 'out(3)', onUpdate: () => render(o.v) });
