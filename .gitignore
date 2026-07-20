@@ -9,3 +9,6 @@ Thumbs.db
 # Bot agent scratchpad memory: keep out of the repo (fixes .Jules/.jules case-collision)
 .jules/
 .Jules/
+
+# graphify knowledge-graph output
+graphify-out/
