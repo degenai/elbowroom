@@ -3,6 +3,7 @@
   // Assets-only Worker (no script): wrangler deploy uploads ./ and serves it.
   "name": "elbowroom",
   "compatibility_date": "2025-06-01",
+  "preview_urls": true,
   "assets": {
     "directory": "./",
     "not_found_handling": "404-page"
