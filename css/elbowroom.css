@@ -385,6 +385,7 @@ section { position: relative; }
 .mt-2 { margin-top: 2rem; } .mt-3 { margin-top: 3rem; }
 .note { background: var(--sand); border: 1px solid var(--line); border-radius: var(--r-md); padding: 1rem 1.2rem; font-size: .92rem; color: var(--ink-soft); display: flex; gap: .7rem; }
 .note i { color: var(--gold-deep); margin-top: .2rem; }
+.clinic-line-label { color: var(--muted); font-size: .85em; margin-left: .3rem; white-space: nowrap; }
 .badge { display: inline-flex; align-items: center; gap: .4rem; background: rgba(60,106,77,.12); color: var(--green); font-weight: 600; font-size: .78rem; letter-spacing: .04em; padding: .3rem .7rem; border-radius: var(--r-pill); }
 
 /* ---------- Draft review / upcoming post gallery (unlisted utility page) ---------- */
