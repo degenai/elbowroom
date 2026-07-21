@@ -13,3 +13,4 @@ workers
 .htmlvalidate.json
 .stylelintrc.json
 scripts
+graphify-out
