@@ -34,7 +34,10 @@ function heroSlam() {
   utils.set(glyphs, { display: 'inline-block', opacity: 0, translateY: '-90%', scale: 1.4, rotate: -6 });
   stack.forEach((el) => utils.set(el, { opacity: 0 }));
 
-  const tl = createTimeline({ defaults: { ease: createSpring({ stiffness: 620, damping: 18, mass: 1.05 }) } });
+  const tl = createTimeline({
+    defaults: { ease: createSpring({ stiffness: 620, damping: 18, mass: 1.05 }) },
+    onComplete: () => split.revert(),
+  });
   tl.add(glyphs, { opacity: [0, 1], translateY: 0, scale: 1, rotate: 0, delay: stagger(34, { from: 'center' }) });
   if (stack.length) {
     tl.add(stack, { opacity: [0, 1], translateY: ['14px', 0], duration: 460, ease: 'outExpo', delay: stagger(90) }, '-=260');
