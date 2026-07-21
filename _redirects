@@ -1,0 +1,20 @@
+# Permanent canonical redirects for legacy HTML URLs.
+/index.html / 301
+/services.html /services 301
+/book.html /book 301
+/about.html /about 301
+/locations.html /locations 301
+/community.html /community 301
+
+# Utility routes remain noindex at their clean destinations.
+/brand-kit.html /brand-kit 301
+/intake.html /intake 301
+/draft-review.html /draft-review 301
+/promo/index.html /promo/ 301
+
+# Print-source and shared-component routes.
+/promo/booking-sheet.html /promo/booking-sheet 301
+/promo/cards.html /promo/cards 301
+/promo/event-hour.html /promo/event-hour 301
+/elbowroom/header.html /elbowroom/header 301
+/elbowroom/footer.html /elbowroom/footer 301
