@@ -166,7 +166,7 @@ function spine() {
     draw.style.strokeDashoffset = len;
   }
 
-  const update = () => {
+  function update() {
     ticking = false;
     const p = cachedMax > 0 ? Math.min(1, Math.max(0, window.scrollY / cachedMax)) : 0;
 
@@ -177,7 +177,7 @@ function spine() {
     if (bar) {
       bar.style.width = (p * 100) + '%';
     }
-  };
+  }
 
   window.addEventListener('scroll', onScroll, { passive: true });
   update();
