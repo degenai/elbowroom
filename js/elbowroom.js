@@ -34,7 +34,10 @@ function heroSlam() {
   utils.set(glyphs, { display: 'inline-block', opacity: 0, translateY: '-90%', scale: 1.4, rotate: -6 });
   stack.forEach((el) => utils.set(el, { opacity: 0 }));
 
-  const tl = createTimeline({ defaults: { ease: createSpring({ stiffness: 620, damping: 18, mass: 1.05 }) } });
+  const tl = createTimeline({
+    defaults: { ease: createSpring({ stiffness: 620, damping: 18, mass: 1.05 }) },
+    onComplete: () => split.revert(),
+  });
   tl.add(glyphs, { opacity: [0, 1], translateY: 0, scale: 1, rotate: 0, delay: stagger(34, { from: 'center' }) });
   if (stack.length) {
     tl.add(stack, { opacity: [0, 1], translateY: ['14px', 0], duration: 460, ease: 'outExpo', delay: stagger(90) }, '-=260');
@@ -50,18 +53,23 @@ function reveals() {
     const dist = el.dataset.reveal === 'left' ? { translateX: ['-36px', 0] }
               : el.dataset.reveal === 'right' ? { translateX: ['36px', 0] }
               : { translateY: ['26px', 0] };
-    utils.set(el, { opacity: 0, ...Object.fromEntries(Object.entries(dist).map(([k, v]) => [k, v[0]])) });
+    // Keep off-screen content visible until it approaches the viewport. Static renderers
+    // do not scroll, and a failed observer must never leave meaningful copy transparent.
     onceInView(el, () => {
-      // stagger children if marked
       const kids = el.dataset.revealChildren ? Array.from(el.children) : null;
       if (kids && kids.length) {
         utils.set(el, { opacity: 1, translateX: 0, translateY: 0 });
         utils.set(kids, { opacity: 0, translateY: '22px' });
-        animate(kids, { opacity: [0, 1], translateY: ['22px', 0], duration: 620, ease: 'outExpo', delay: stagger(90) });
+        requestAnimationFrame(() => {
+          animate(kids, { opacity: [0, 1], translateY: ['22px', 0], duration: 620, ease: 'outExpo', delay: stagger(90) });
+        });
       } else {
-        animate(el, { opacity: [0, 1], ...dist, duration: 720, ease: 'outExpo' });
+        utils.set(el, { opacity: 0, ...Object.fromEntries(Object.entries(dist).map(([k, v]) => [k, v[0]])) });
+        requestAnimationFrame(() => {
+          animate(el, { opacity: [0, 1], ...dist, duration: 720, ease: 'outExpo' });
+        });
       }
-    });
+    }, '0px 0px 35% 0px');
   });
 }
 

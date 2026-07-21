@@ -4,3 +4,21 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
   Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=()
+
+# Commit and branch previews duplicate the custom-domain site. Keep them crawlable for QA,
+# but never eligible for indexing.
+https://:version.:subdomain.workers.dev/*
+  X-Robots-Tag: noindex, nofollow
+
+# Publicly reachable working tools and print assets are not search landing pages.
+/draft-review*
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet, noimageindex
+
+/brand-kit
+  X-Robots-Tag: noindex, follow
+
+/intake
+  X-Robots-Tag: noindex, follow
+
+/promo/*
+  X-Robots-Tag: noindex, nofollow, noarchive

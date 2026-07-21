@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Elbow Room Massage Therapy | Woodstock, GA</title>
-  <meta name="description" content="Elbow Room is a licensed clinical massage therapy practice in Woodstock, GA. Unhurried, evidence-informed bodywork, shaped around you. A full hour of hands-on time.">
+  <title>Massage Therapy in Woodstock, GA | Elbow Room</title>
+  <meta name="description" content="Licensed massage therapy in Woodstock, GA with a full 60 minutes of hands-on care. Deep tissue, trigger point, myofascial work, and simple pricing.">
   <meta name="theme-color" content="#1b2c4d">
   <link rel="canonical" href="https://elbowroommassage.com/">
   <meta property="og:url" content="https://elbowroommassage.com/">
@@ -12,54 +12,97 @@
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Elbow Room Massage Therapy | Woodstock, GA">
-  <meta property="og:description" content="Licensed clinical massage therapy in Woodstock, GA. Unhurried, evidence-informed bodywork, shaped around you. A full hour of hands-on time.">
+  <meta property="og:title" content="Massage Therapy in Woodstock, GA | Elbow Room">
+  <meta property="og:description" content="Licensed massage therapy in Woodstock, GA with a full 60 minutes of hands-on care. Deep tissue, trigger point, myofascial work, and simple pricing.">
   <meta property="og:image" content="https://elbowroommassage.com/images/elbowroom/og.jpg">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Elbow Room Massage Therapy | Woodstock, GA">
-  <meta name="twitter:description" content="Licensed clinical massage therapy in Woodstock, GA. Unhurried, evidence-informed bodywork, shaped around you. A full hour of hands-on time.">
+  <meta name="twitter:title" content="Massage Therapy in Woodstock, GA | Elbow Room">
+  <meta name="twitter:description" content="Licensed massage therapy in Woodstock, GA with a full 60 minutes of hands-on care. Deep tissue, trigger point, myofascial work, and simple pricing.">
   <meta name="twitter:image" content="https://elbowroommassage.com/images/elbowroom/og.jpg">
 
-  <!-- LocalBusiness structured data (JSON-LD). Address matches the footer "Map & Directions" link. -->
+  <!-- Local entity graph. Keep public contact details and service-area claims consistent with the visible site. -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": ["LocalBusiness", "HealthAndBeautyBusiness"],
-    "@id": "https://elbowroommassage.com/#business",
-    "name": "Elbow Room Massage Therapy",
-    "description": "Licensed clinical massage therapy in Woodstock, GA, inside Stauffer Chiropractic. Unhurried, evidence-informed bodywork: a full hour of hands-on time, shaped around you. Saturdays and Sundays by appointment.",
-    "url": "https://elbowroommassage.com/",
-    "image": "https://elbowroommassage.com/images/elbowroom/og.jpg",
-    "logo": "https://elbowroommassage.com/images/elbowroom/favicon-180.png",
-    "email": "hello@elbowroommassage.com",
-    "priceRange": "$25-$85",
-    "currenciesAccepted": "USD",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "4595 Towne Lake Pkwy, Bldg 300, Ste 100",
-      "addressLocality": "Woodstock",
-      "addressRegion": "GA",
-      "postalCode": "30189",
-      "addressCountry": "US"
-    },
-    "areaServed": [
-      { "@type": "City", "name": "Woodstock" },
-      { "@type": "AdministrativeArea", "name": "Cherokee County, GA" },
-      { "@type": "AdministrativeArea", "name": "Cobb County, GA" },
-      { "@type": "Place", "name": "Greater Atlanta metro" }
-    ],
-    "founder": {
-      "@type": "Person",
-      "name": "Alex Adamczyk",
-      "jobTitle": "Licensed Massage Therapist",
-      "hasCredential": {
-        "@type": "EducationalOccupationalCredential",
-        "credentialCategory": "license",
-        "name": "Georgia Massage Therapy License #MT013193"
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://elbowroommassage.com/#website",
+        "url": "https://elbowroommassage.com/",
+        "name": "Elbow Room Massage Therapy",
+        "alternateName": "Elbow Room",
+        "inLanguage": "en-US",
+        "publisher": { "@id": "https://elbowroommassage.com/#business" }
+      },
+      {
+        "@type": ["LocalBusiness", "HealthAndBeautyBusiness"],
+        "@id": "https://elbowroommassage.com/#business",
+        "name": "Elbow Room Massage Therapy",
+        "description": "Licensed clinical massage therapy in Woodstock, GA, inside Stauffer Chiropractic. Unhurried, evidence-informed bodywork with a full hour of hands-on time.",
+        "url": "https://elbowroommassage.com/",
+        "image": "https://elbowroommassage.com/images/elbowroom/og.jpg",
+        "logo": "https://elbowroommassage.com/images/elbowroom/favicon-512.png",
+        "email": "hello@elbowroommassage.com",
+        "telephone": "+1-470-702-3474",
+        "priceRange": "$25-$85",
+        "currenciesAccepted": "USD",
+        "paymentAccepted": "Credit card, Venmo, Cash App",
+        "openingHoursSpecification": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "https://schema.org/Saturday",
+            "https://schema.org/Sunday"
+          ],
+          "description": "Appointments available by advance booking."
+        },
+        "hasMap": "https://www.google.com/maps/search/?api=1&query=Stauffer+Chiropractic+4595+Towne+Lake+Pkwy+Woodstock+GA+30189",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "4595 Towne Lake Pkwy, Bldg 300, Ste 100",
+          "addressLocality": "Woodstock",
+          "addressRegion": "GA",
+          "postalCode": "30189",
+          "addressCountry": "US"
+        },
+        "areaServed": [
+          { "@type": "City", "name": "Woodstock" },
+          { "@type": "AdministrativeArea", "name": "Cherokee County, GA" },
+          { "@type": "AdministrativeArea", "name": "Cobb County, GA" },
+          { "@type": "Place", "name": "Greater Atlanta metro" }
+        ],
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "customer service",
+          "telephone": "+1-470-702-3474",
+          "email": "hello@elbowroommassage.com",
+          "availableLanguage": "English"
+        },
+        "founder": { "@id": "https://elbowroommassage.com/#alex-adamczyk" },
+        "employee": { "@id": "https://elbowroommassage.com/#alex-adamczyk" },
+        "knowsAbout": [
+          "Therapeutic massage",
+          "Deep tissue massage",
+          "Trigger point therapy",
+          "Myofascial release",
+          "Chair massage"
+        ],
+        "sameAs": ["https://www.instagram.com/elbowroommassage"]
+      },
+      {
+        "@type": "Person",
+        "@id": "https://elbowroommassage.com/#alex-adamczyk",
+        "name": "Alex Adamczyk",
+        "url": "https://elbowroommassage.com/about",
+        "jobTitle": "Licensed Massage Therapist",
+        "worksFor": { "@id": "https://elbowroommassage.com/#business" },
+        "hasCredential": {
+          "@type": "EducationalOccupationalCredential",
+          "credentialCategory": "license",
+          "name": "Georgia Massage Therapy License #MT013193"
+        },
+        "sameAs": ["https://www.linkedin.com/in/alex-adamczyk-0957bb138"]
       }
-    },
-    "knowsAbout": ["Clinical massage therapy", "Deep tissue massage", "Chair massage"],
-    "sameAs": ["https://www.instagram.com/elbowroommassage"]
+    ]
   }
   </script>
 
@@ -87,12 +130,12 @@
       <div class="container">
         <div class="er-hero-grid">
           <div class="er-hero-copy">
-            <span class="pill"><span class="dot"></span> Now booking in Woodstock, GA</span>
+            <span class="pill"><span class="dot"></span> Massage therapy in Woodstock, GA</span>
             <h1 class="er-h1-wordmark" data-slam><span class="e">Elbow</span> Room</h1>
             <p class="lead" data-hero-follow>Clinical massage therapy with the one thing the chains cut first: time. Real hands, a full hour of hands-on work, and a session shaped around you.</p>
             <div class="btn-row" data-hero-follow>
-              <a href="book.html" class="btn btn-gold btn-lg">Book a Session <span class="arrow" aria-hidden="true">&rarr;</span></a>
-              <a href="services.html" class="btn btn-ghost btn-lg">See Services &amp; Pricing</a>
+              <a href="/book" class="btn btn-gold btn-lg">Book a Session <span class="arrow" aria-hidden="true">&rarr;</span></a>
+              <a href="/services" class="btn btn-ghost btn-lg">See Services &amp; Pricing</a>
             </div>
             <div class="er-trust" data-hero-follow>
               <div><b>Licensed</b> Georgia LMT #MT013193</div>
@@ -141,7 +184,7 @@
               <li><i class="fas fa-check" aria-hidden="true"></i> Great for a workday or a warm-up</li>
               <li><i class="fas fa-check" aria-hidden="true"></i> First one free for new clients, a $25 value</li>
             </ul>
-            <a href="book.html" class="btn btn-ghost btn-block">Book a session</a>
+            <a href="/book" class="btn btn-ghost btn-block">Book a session</a>
           </article>
 
           <article class="card svc featured" data-tilt>
@@ -154,7 +197,7 @@
               <li><i class="fas fa-check" aria-hidden="true"></i> A real intake, every visit</li>
               <li><i class="fas fa-check" aria-hidden="true"></i> New clients: apply your $25 first-visit credit, $60 instead of $85</li>
             </ul>
-            <a href="book.html" class="btn btn-gold btn-block">Book a session</a>
+            <a href="/book" class="btn btn-gold btn-block">Book a session</a>
           </article>
 
           <article class="card svc" data-tilt>
@@ -166,7 +209,7 @@
               <li><i class="fas fa-check" aria-hidden="true"></i> Targeted relief without the full hour</li>
               <li><i class="fas fa-check" aria-hidden="true"></i> New clients: apply your $25 first-visit credit</li>
             </ul>
-            <a href="book.html" class="btn btn-ghost btn-block">Book a session</a>
+            <a href="/book" class="btn btn-ghost btn-block">Book a session</a>
           </article>
         </div>
         <div class="note mt-3" data-reveal><i class="fas fa-circle-info" aria-hidden="true"></i> <span>New client? You get one $25 first-visit credit: take it as a free 15-minute massage, or apply it toward a longer session. Same value, your choice, not both.</span></div>
@@ -236,7 +279,7 @@
             <span class="badge" style="background:rgba(196,154,72,.16); color:var(--gold-deep);">First visit</span>
             <h3 style="margin-top:.7rem;">One $25 credit on your first visit</h3>
             <p>New clients get one $25 first-visit credit. Take it as a free 15-minute massage, a $25 value, or apply it toward a longer session and make your first full hour $60 instead of $85. Same credit, your choice, not both, with no membership and no catch.</p>
-            <a href="book.html" class="btn btn-gold">Book your first session <span class="arrow" aria-hidden="true">&rarr;</span></a>
+            <a href="/book" class="btn btn-gold">Book your first session <span class="arrow" aria-hidden="true">&rarr;</span></a>
           </div>
         </div>
       </div>
@@ -280,13 +323,13 @@
           </div>
           <div data-reveal="left">
             <span class="eyebrow">Where To Find Us</span>
-            <h2>Woodstock today. Built to grow.</h2>
-            <p class="lead">Our home base is inside Stauffer Chiropractic in Woodstock. One standard of care, wherever the table lands.</p>
+            <h2>Massage therapy in Woodstock, inside Stauffer Chiropractic</h2>
+            <p class="lead">Find Elbow Room at 4595 Towne Lake Pkwy, Bldg 300, Ste 100, Woodstock, GA 30189. Weekend appointments are booked through Jane.</p>
             <ul style="display:grid; gap:.8rem; margin:1.4rem 0;">
-              <li class="badge"><i class="fas fa-location-dot" aria-hidden="true"></i> Woodstock, GA &middot; inside Stauffer Chiropractic</li>
-              <li class="badge" style="background:rgba(196,154,72,.14); color:var(--gold-deep);"><i class="fas fa-seedling" aria-hidden="true"></i> New locations in progress</li>
+              <li class="badge"><i class="fas fa-location-dot" aria-hidden="true"></i> Towne Lake, Woodstock, GA</li>
+              <li class="badge" style="background:rgba(196,154,72,.14); color:var(--gold-deep);"><i class="fas fa-calendar-check" aria-hidden="true"></i> Saturday &amp; Sunday &middot; by appointment</li>
             </ul>
-            <a href="locations.html" class="btn btn-navy">Find a Location <span class="arrow" aria-hidden="true">&rarr;</span></a>
+            <a href="/locations" class="btn btn-navy">Find a Location <span class="arrow" aria-hidden="true">&rarr;</span></a>
           </div>
         </div>
       </div>
@@ -299,7 +342,7 @@
         <h2>A community chair-massage program</h2>
         <p class="lead">Part of our outreach brings on-site chair massage to local fundraisers and events, with a 50/50 split that sends half the proceeds to a cause the host chooses. Good for the block, good for the practice.</p>
         <div class="btn-row center mt-2">
-          <a href="community.html" class="btn btn-ghost">How the program works</a>
+          <a href="/community" class="btn btn-ghost">How the program works</a>
         </div>
       </div>
     </section>
@@ -326,7 +369,7 @@
           </details>
           <details>
             <summary>Where are you located? <span class="pm" aria-hidden="true"><i class="fas fa-plus"></i></span></summary>
-            <div class="ans">Our home base is inside Stauffer Chiropractic in the Towne Lake area of Woodstock, GA, with on-site chair massage for teams and events across the greater Atlanta metro. See the <a href="locations.html">locations page</a> for directions.</div>
+            <div class="ans">Our home base is inside Stauffer Chiropractic in the Towne Lake area of Woodstock, GA, with on-site chair massage for teams and events across the greater Atlanta metro. See the <a href="/locations">locations page</a> for directions.</div>
           </details>
         </div>
       </div>
@@ -340,8 +383,8 @@
           <h2>Book the hour that actually helps.</h2>
           <p class="lead">One unhurried session in Woodstock, and your first hour is just $60. A full hour of real work, not a clock racing the door.</p>
           <div class="btn-row center mt-2">
-            <a href="book.html" class="btn btn-gold btn-lg">Book a Session <span class="arrow" aria-hidden="true">&rarr;</span></a>
-            <a href="services.html" class="btn btn-ghost btn-lg">Browse Services</a>
+            <a href="/book" class="btn btn-gold btn-lg">Book a Session <span class="arrow" aria-hidden="true">&rarr;</span></a>
+            <a href="/services" class="btn btn-ghost btn-lg">Browse Services</a>
           </div>
         </div>
       </div>
@@ -354,22 +397,23 @@
           <div data-reveal="left">
             <span class="eyebrow">Get In Touch</span>
             <h2>Reach out</h2>
-            <p class="lead">Questions about a session, a partnership, or booking your team? Send a note and we will get back to you.</p>
+            <p class="lead">Questions about a session, a partnership, or booking your team? Call the clinic or send a note and we will get back to you.</p>
             <div class="grid" style="gap:1rem; margin-top:1.4rem;">
+              <p><i class="fas fa-phone" aria-hidden="true" style="color:var(--gold-deep); width:1.4rem;"></i> <a href="tel:+14707023474">(470) 702-3474</a> <span class="clinic-line-label">clinic line</span></p>
               <p><i class="fas fa-envelope" aria-hidden="true" style="color:var(--gold-deep); width:1.4rem;"></i> <a href="mailto:hello@elbowroommassage.com">hello@elbowroommassage.com</a></p>
               <p><i class="fas fa-location-dot" aria-hidden="true" style="color:var(--gold-deep); width:1.4rem;"></i> Woodstock, GA &middot; inside Stauffer Chiropractic</p>
-              <p><i class="fas fa-clock" aria-hidden="true" style="color:var(--gold-deep); width:1.4rem;"></i> By appointment in Woodstock, weekends at our Stauffer home base</p>
+              <p><i class="fas fa-clock" aria-hidden="true" style="color:var(--gold-deep); width:1.4rem;"></i> Appointments available Saturdays and Sundays</p>
             </div>
           </div>
           <div data-reveal="right">
             <div class="card" style="padding:1.8rem;">
               <h3>Book the fastest way</h3>
               <p>Online booking is live and takes about a minute.</p>
-              <a href="book.html" class="btn btn-gold btn-block">Open Booking <span class="arrow" aria-hidden="true">&rarr;</span></a>
+              <a href="/book" class="btn btn-gold btn-block">Open Booking <span class="arrow" aria-hidden="true">&rarr;</span></a>
               <hr class="rule" style="margin:1.4rem 0;">
               <h3 style="font-size:1.2rem;">Bring it to your team</h3>
               <p>On-site chair massage for gyms, offices, and events across the Atlanta metro.</p>
-              <a href="services.html" class="btn btn-ghost btn-block">On-site &amp; events</a>
+              <a href="/services" class="btn btn-ghost btn-block">On-site &amp; events</a>
             </div>
           </div>
         </div>

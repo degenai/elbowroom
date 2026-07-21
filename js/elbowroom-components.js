@@ -57,7 +57,7 @@
     document.querySelectorAll('[data-er-year]').forEach(function (el) { el.textContent = new Date().getFullYear(); });
   }
 
-  Promise.all([inject('er-header', partial('header.html')), inject('er-footer', partial('footer.html'))])
+  Promise.all([inject('er-header', partial('header')), inject('er-footer', partial('footer'))])
     .then(wireHeader)
     .then(function () { return import(moduleUrl); })
     .catch(function () { import(moduleUrl); });

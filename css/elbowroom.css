@@ -13,7 +13,7 @@
   --navy-900:    #0b1626;
   --gold:        #c49a48;
   --gold-light:  #dcc06a;
-  --gold-deep:   #8a6a2e;
+  --gold-deep:   #7a5b24;
   --green:       #3c6a4d;
   --green-light: #4f7e60;
 
@@ -68,9 +68,9 @@ body {
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
 }
-
 img { max-width: 100%; height: auto; display: block; }
 a { color: var(--navy); text-decoration: none; transition: color .2s var(--ease); }
+main p a:not(.btn), main .note a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .16em; }
 ul { list-style: none; }
 :focus-visible { outline: 3px solid var(--navy); outline-offset: 3px; box-shadow: 0 0 0 6px rgba(246,243,236,.6); border-radius: 4px; }
 /* On dark sections the navy outline would vanish; switch it to gold (the cream halo still reads). */
@@ -143,8 +143,8 @@ section { position: relative; }
 /* Ghost outline is an inset shadow, not a layout border, so there is no fractional-border edge seam. */
 .btn-ghost { background: transparent; color: var(--navy); box-shadow: inset 0 0 0 1.5px var(--line); }
 .btn-ghost:hover { background: rgba(27,44,77,.04); box-shadow: inset 0 0 0 1.5px var(--navy); }
-.bg-navy .btn-ghost, .er-cta .btn-ghost { color: #eaf0fb; box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.28); }
-.bg-navy .btn-ghost:hover, .er-cta .btn-ghost:hover { background: rgba(255,255,255,.08); box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.6); }
+.bg-navy .btn-ghost, .er-hero .btn-ghost, .er-cta .btn-ghost { color: #eaf0fb; box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.28); }
+.bg-navy .btn-ghost:hover, .er-hero .btn-ghost:hover, .er-cta .btn-ghost:hover { background: rgba(255,255,255,.08); box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.6); }
 
 .btn-lg { padding: 1.08rem 2.1rem; font-size: 1.05rem; }
 .btn-block { width: 100%; }
@@ -354,6 +354,8 @@ section { position: relative; }
 .er-foot-brand p { font-size: .92rem; max-width: 34ch; }
 .er-foot-col h4 { font-family: var(--f-body); font-weight: 700; font-size: .82rem; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 1rem; color: #fff; }
 .er-foot-col a { display: block; padding: .3rem 0; font-size: .95rem; }
+.er-foot-address { margin: 0 0 .45rem; color: #aeb9cf; font-style: normal; font-size: .9rem; line-height: 1.6; }
+.er-foot-address a { padding-top: 0; font-weight: 600; }
 .er-foot-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; padding-top: 1.6rem; font-size: .85rem; color: #8090ac; }
 .er-foot-social { display: flex; gap: .6rem; }
 .er-foot-social a { width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,.16); display: grid; place-items: center; color: #cdd6e7; transition: all .2s; }
@@ -383,6 +385,7 @@ section { position: relative; }
 .mt-2 { margin-top: 2rem; } .mt-3 { margin-top: 3rem; }
 .note { background: var(--sand); border: 1px solid var(--line); border-radius: var(--r-md); padding: 1rem 1.2rem; font-size: .92rem; color: var(--ink-soft); display: flex; gap: .7rem; }
 .note i { color: var(--gold-deep); margin-top: .2rem; }
+.clinic-line-label { color: var(--muted); font-size: .85em; margin-left: .3rem; white-space: nowrap; }
 .badge { display: inline-flex; align-items: center; gap: .4rem; background: rgba(60,106,77,.12); color: var(--green); font-weight: 600; font-size: .78rem; letter-spacing: .04em; padding: .3rem .7rem; border-radius: var(--r-pill); }
 
 /* ---------- Draft review / upcoming post gallery (unlisted utility page) ---------- */
