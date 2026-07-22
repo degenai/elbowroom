@@ -5,13 +5,14 @@ Static site for elbowroommassage.com. HTML/CSS/JS, no build step.
 Pages: index, services, about, locations, book, community, brand-kit, intake (printable client form, linked from book).
 Shared: css/elbowroom.css, js/elbowroom*.js, elbowroom/ partials, images/elbowroom/ assets.
 
-Booking: Jane (shared platform with the chiro). The book page links out to Jane; replace the
-href in book.html with the per-practitioner "Book Online" link from Jane Settings -> Branding ->
-Book Online Buttons. Payment is handled at the appointment (Venmo / Cash App / card), not online.
+Booking: Jane (shared platform with the chiro). Jane currently shows Alex's treatments and openings as
+contact-only, so the public page links directly to the Massage Therapy availability and tells clients
+to call the clinic to reserve. Replace that fallback with Alex's practitioner-specific self-booking URL
+only after Jane displays the real $25/$45/$85 prices and a complete client booking flow.
 
-NOTE: still set to noindex (preview). Before going public: confirm the Jane booking link, wire a
-real inbox (hello@elbowroom.example placeholder), confirm the Stauffer public listing, then remove
-the robots noindex and add sitemap.xml + robots.txt.
+Production is indexable. Keep booking copy on the contact-only fallback until Jane's public price and
+self-booking contract is verified end to end; keep the shared clinic phone qualified until the distinct
+Elbow Room line is provisioned and replaced everywhere in one coordinated pass.
 
 ## Draft review notes Worker
 
