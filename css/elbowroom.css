@@ -574,3 +574,95 @@ section { position: relative; }
   .draft-note-fields { grid-template-columns: 1fr; }
   .draft-note-actions button { width: 100%; }
 }
+
+/* ---------- Events & Appearances (events.html) ----------
+   Featured countdown card + upcoming list + past-appearances gallery.
+   All content is injected by js/elbowroom-events.js; these styles cover both the
+   populated and the placeholder/empty states. */
+
+/* Featured next event: navy card, gold live countdown. */
+.event-countdown {
+  background: linear-gradient(125deg, var(--navy-deep), var(--navy-900));
+  color: #eaf0fb;
+  border-radius: clamp(20px, 4vw, 32px);
+  padding: clamp(2rem, 5vw, 3.4rem);
+  box-shadow: var(--shadow-lg);
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: clamp(1.6rem, 4vw, 3rem);
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+.event-countdown::after {
+  content: ""; position: absolute; right: -50px; bottom: -70px; width: 300px; height: 300px;
+  background: url("../images/elbowroom/mark-gold-400.png") center/contain no-repeat; opacity: .08; pointer-events: none;
+}
+@media (max-width: 720px) { .event-countdown { grid-template-columns: 1fr; text-align: center; } }
+
+.countdown-lead { position: relative; z-index: 2; display: flex; flex-direction: column; gap: .5rem; align-items: flex-start; }
+@media (max-width: 720px) { .countdown-lead { align-items: center; } }
+.countdown-overline { font-family: var(--f-body); font-weight: 700; font-size: .76rem; letter-spacing: .18em; text-transform: uppercase; color: var(--gold-light); }
+.countdown-name { font-family: var(--f-display); font-size: clamp(1.6rem, 3.4vw, 2.4rem); color: #fff; line-height: 1.12; }
+.countdown-when { color: var(--gold-light); font-weight: 600; }
+.countdown-where { color: #c4cfe3; font-size: .98rem; }
+.countdown-blurb { color: #aab6cd; font-size: .95rem; max-width: 46ch; }
+.countdown-link { margin-top: .9rem; }
+
+.countdown-timer { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(4, 1fr); gap: .7rem; }
+.countdown-unit {
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12);
+  border-radius: var(--r-md); padding: 1rem .4rem; text-align: center;
+}
+.countdown-number {
+  display: block; font-family: var(--f-display); font-weight: 600;
+  font-size: clamp(1.8rem, 5vw, 2.7rem); line-height: 1; color: var(--gold-light);
+  font-variant-numeric: tabular-nums;
+}
+.countdown-label { display: block; margin-top: .45rem; font-size: .66rem; letter-spacing: .12em; text-transform: uppercase; color: #93a1bd; }
+
+/* Empty / to-be-announced state (spans the whole card). */
+.countdown-empty { position: relative; z-index: 2; grid-column: 1 / -1; text-align: center; padding: 1rem .5rem; }
+.countdown-empty i { display: block; font-size: 1.9rem; color: var(--gold-light); margin-bottom: .7rem; }
+.countdown-empty-title { font-family: var(--f-display); font-size: clamp(1.3rem, 2.6vw, 1.8rem); color: #fff; margin-bottom: .4rem; }
+.countdown-empty-sub { color: #c4cfe3; margin: 0; }
+.countdown-empty-sub a { color: var(--gold-light); text-decoration: underline; }
+
+/* Also-on-the-calendar list. */
+.upcoming-events { margin-top: clamp(1.4rem, 4vw, 2.2rem); display: grid; gap: .8rem; }
+.upcoming-events:empty { margin-top: 0; }
+.upcoming-events-header { font-family: var(--f-body); font-weight: 700; font-size: .76rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); padding: .2rem 0; }
+.upcoming-event {
+  background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-md);
+  padding: 1.05rem 1.3rem; box-shadow: var(--shadow-sm);
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: .35rem .95rem;
+  transition: border-color .3s, transform .3s;
+}
+.upcoming-event:hover { border-color: rgba(196,154,72,.4); transform: translateY(-2px); }
+.upcoming-event-when { flex: 0 0 auto; font-weight: 600; color: var(--gold-deep); font-size: .92rem; }
+.upcoming-event-name { flex: 1 1 auto; font-family: var(--f-display); font-size: 1.15rem; color: var(--navy); }
+.upcoming-event-where { flex: 1 1 100%; color: var(--muted); font-size: .9rem; }
+.upcoming-event-blurb { flex: 1 1 100%; color: var(--ink-soft); font-size: .92rem; }
+
+/* Past appearances gallery. */
+.appearances-empty-note { text-align: center; color: var(--muted); font-style: italic; font-family: var(--f-display); margin-bottom: 1.6rem; }
+.appearances-gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.4rem; }
+@media (max-width: 860px) { .appearances-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .appearances-gallery { grid-template-columns: 1fr; } }
+.appearance-card {
+  background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-lg);
+  overflow: hidden; box-shadow: var(--shadow-sm); display: flex; flex-direction: column;
+  transition: transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s;
+}
+.appearance-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: rgba(196,154,72,.4); }
+.appearance-photo { aspect-ratio: 4/3; background: var(--cream); display: grid; place-items: center; overflow: hidden; }
+.appearance-photo img { width: 100%; height: 100%; object-fit: cover; }
+.appearance-photo.placeholder { background: radial-gradient(circle at 30% 25%, #fffdf8, var(--sand)); color: var(--gold-deep); font-size: 1.7rem; }
+.appearance-body { padding: 1.2rem 1.3rem 1.4rem; display: flex; flex-direction: column; gap: .4rem; }
+.appearance-when { font-size: .8rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--gold-deep); }
+.appearance-body h3 { font-size: 1.2rem; margin: 0; }
+.appearance-where { color: var(--muted); font-size: .9rem; margin: 0; }
+.appearance-body p { color: var(--ink-soft); font-size: .95rem; margin: 0; }
+.appearance-link { display: inline-flex; align-items: center; gap: .4rem; margin-top: .3rem; font-weight: 600; font-size: .92rem; color: var(--navy); }
+.appearance-link:hover { color: var(--gold-deep); }
+.appearance-card.soon { opacity: .72; }
