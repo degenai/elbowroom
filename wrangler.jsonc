@@ -1,11 +1,18 @@
 {
   // Elbow Room Massage Therapy — static site, served via Cloudflare Workers Static Assets.
-  // Assets-only Worker (no script): wrangler deploy uploads ./ and serves it.
+  // The small Worker entry point serves apex assets and permanently redirects www.
   "name": "elbowroom",
+  "main": "workers/site-router.mjs",
   "compatibility_date": "2025-06-01",
   "preview_urls": true,
+  "routes": [
+    { "pattern": "elbowroommassage.com", "custom_domain": true },
+    { "pattern": "www.elbowroommassage.com", "custom_domain": true }
+  ],
   "assets": {
     "directory": "./",
+    "binding": "ASSETS",
+    "run_worker_first": true,
     "not_found_handling": "404-page"
   }
 }
