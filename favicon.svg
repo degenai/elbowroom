@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Elbow Room E monogram">
+  <title>Elbow Room E monogram</title>
+  <rect width="64" height="64" rx="13" fill="#1b2c4d"/>
+  <rect x="3" y="3" width="58" height="58" rx="11" fill="none" stroke="#c49a48" stroke-width="3"/>
+  <path d="M20 16H45V22H27V29H42V35H27V42H45V48H20Z" fill="#f6f3ec"/>
+  <path d="M19 52H45" stroke="#c49a48" stroke-width="3" stroke-linecap="round"/>
+</svg>

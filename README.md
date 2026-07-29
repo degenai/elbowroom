@@ -5,14 +5,15 @@ Static site for elbowroommassage.com. HTML/CSS/JS, no build step.
 Pages: index, services, about, locations, book, community, brand-kit, intake (printable client form, linked from book).
 Shared: css/elbowroom.css, js/elbowroom*.js, elbowroom/ partials, images/elbowroom/ assets.
 
-Booking: Jane (shared platform with the chiro). Jane currently shows Alex's treatments and openings as
-contact-only, so the public page links directly to the Massage Therapy availability and tells clients
-to call the clinic to reserve. Replace that fallback with Alex's practitioner-specific self-booking URL
-only after Jane displays the real $25/$45/$85 prices and a complete client booking flow.
+Booking: Jane (shared platform with the chiro). The public booking page hands off to Alex's practitioner-specific
+profile at `/locations/stauffer-chiropractic/book#/staff_member/3`. The verified flow exposes Alex's live weekend
+openings, publishes the $25/$45/$85 core menu, holds the selected time, and reaches Jane's sign-in/create-account
+confirmation gate without collecting payment. Jane's `$0.00` display means nothing is due online; clients pay the
+published session price at the appointment.
 
-Production is indexable. Keep booking copy on the contact-only fallback until Jane's public price and
-self-booking contract is verified end to end; keep the shared clinic phone qualified until the distinct
-Elbow Room line is provisioned and replaced everywhere in one coordinated pass.
+Production is indexable. Keep the direct booking contract covered by `scripts/booking-truth.test.mjs`; keep the
+shared clinic phone qualified as a human help fallback until the distinct Elbow Room line is provisioned and
+replaced everywhere in one coordinated pass.
 
 ## Draft review notes Worker
 
