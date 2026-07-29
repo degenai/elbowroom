@@ -20,6 +20,8 @@ test('the production asset bundle excludes source, tooling, and dependencies', (
     '.assetsignore',
     '.wrangler',
     'node_modules',
+    'node_modules/',
+    'node_modules/**',
     'README.md',
     'scripts',
     'workers',
